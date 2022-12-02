@@ -1,0 +1,16 @@
+sonata_admin:
+    title: 'Sonata Admin'
+    dashboard:
+        blocks:
+            - { type: sonata.admin.block.admin_list, position: left }
+
+sonata_block:
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]
+
+services:
+    admin.staff_user:
+        class: App\Admin\UserWriter
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\User, manager_type: orm, label: Users }
