@@ -5,7 +5,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('app/css/login-form.css') }}">
-    <link rel="icon" type="image/x-icon" href="{{ asset('app/img/f.ico') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('f.ico') }}">
 <body>
 
 
@@ -32,6 +32,10 @@
                 <input type="password" id="password" name="_password" placeholder="Password"/>
             </div>
             <button type="submit">Log in</button>
+        </form>
+        <form action="{{ path('app_register') }}" method="get">
+            <div class="form-title">Don't have an account?</div>
+            <button type="submit">Sign up</button>
         </form>
     </div>
 
