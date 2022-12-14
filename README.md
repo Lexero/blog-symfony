@@ -1,2 +1,2 @@
 # blog-symfony
-Pet project blog on symphony 6.0
+Pet project blog on symphony 6.2
