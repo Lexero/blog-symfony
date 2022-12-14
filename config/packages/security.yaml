@@ -5,8 +5,8 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
 
     role_hierarchy:
-        ROLE_WRITER: [ ROLE_USER, ROLE_ADMIN ]
-        ROLE_READER: [ ROLE_USER ]
+        !php/const App\DBAL\Types\Enum\UserRoleTypeEnum::ROLE_WRITER: [!php/const App\DBAL\Types\Enum\UserRoleTypeEnum::ROLE_READER, !php/const App\DBAL\Types\Enum\UserRoleTypeEnum::ROLE_ADMIN]
+        !php/const App\DBAL\Types\Enum\UserRoleTypeEnum::ROLE_READER: [ !php/const App\DBAL\Types\Enum\UserRoleTypeEnum::ROLE_USER ]
     providers:
         user:
             entity:
@@ -16,23 +16,37 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        admin:
+            pattern: ^/admin
+            form_login:
+                provider: user
+                check_path: admin_login
+                login_path: admin_login
+                default_target_path: sonata_admin_dashboard
+            logout:
+                path: admin_logout
+                target: admin_login
         main:
             lazy: false
             form_login:
                 provider: user
                 login_path: login
                 check_path: login
-                #                default_target_path: /blog
-                default_target_path: sonata_admin_dashboard
+                default_target_path: /blog
             logout:
                 path: logout
                 target: login
+#            custom_authenticator: App\Security\UserAuthenticator
 
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/_profiler, roles: PUBLIC_ACCESS }
         - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/register, roles: PUBLIC_ACCESS }
+        - { path: ^/verify/email, roles: PUBLIC_ACCESS }
+        - { path: ^/admin/login, roles: PUBLIC_ACCESS }
         - { path: ^/admin, roles: ROLE_WRITER }
+        - { path: ^/blog, roles: ROLE_READER }
         - { path: ^/, roles: ROLE_READER }
 
 when@test:

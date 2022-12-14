@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
+use App\DBAL\Types\Enum\UserRoleTypeEnum;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -20,13 +23,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column]
-    private array $roles = [];
+    private array $roles = [UserRoleTypeEnum::ROLE_READER];
 
-    /**
-     * @var string The hashed password
-     */
+    #[ORM\Column]
+    private ?string $confirmationCode = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $enabled = false;
+
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $isVerified = false;
 
     public function getId(): ?int
     {
@@ -38,11 +47,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(string $email): void
     {
         $this->email = $email;
-
-        return $this;
     }
 
     /**
@@ -56,30 +63,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @deprecated since Symfony 5.3, use getUserIdentifier instead
-     */
-    public function getUsername(): string
-    {
-        return (string) $this->email;
-    }
-
-    /**
      * @see UserInterface
      */
+
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        return $this->roles;
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(array $roles): void
     {
+        foreach ($roles as $role) {
+            if (!UserRoleTypeEnum::isValid($role)) {
+                throw new \RuntimeException('Invalid role: ' . $role);
+            }
+        }
         $this->roles = $roles;
-
-        return $this;
     }
 
     /**
@@ -90,22 +89,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(string $password): void
     {
         $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Returning a salt is only needed, if you are not using a modern
-     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
-     *
-     * @see UserInterface
-     */
-    public function getSalt(): ?string
-    {
-        return null;
     }
 
     /**
@@ -115,5 +101,51 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): void
+    {
+        $this->isVerified = $isVerified;
+    }
+
+    /**
+     * @return string
+     */
+    public function getConfirmationCode(): string
+    {
+        return $this->confirmationCode;
+    }
+
+    /**
+     * @param string $confirmationCode
+     *
+     * @return User
+     */
+    public function setConfirmationCode(string $confirmationCode): void
+    {
+        $this->confirmationCode = $confirmationCode;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool $enabled
+     *
+     * @return User
+     */
+    public function setEnable(bool $enabled): void
+    {
+        $this->enabled = $enabled;
     }
 }

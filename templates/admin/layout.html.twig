@@ -1,0 +1,22 @@
+{% extends '@SonataAdmin/standard_layout.html.twig' %}
+
+{# Simple logout button #}
+{% block sonata_top_nav_menu %}
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                {% block sonata_top_nav_menu_user_block %}
+                    <li class="dropdown user-menu">
+                        <a class="dropdown-toggle" href="{{ path('admin_logout') }}">
+                            <i class="fa fa-user fa-sign-out" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                {% endblock %}
+            </ul>
+        </div>
+{% endblock %}
+
+{# Favicon for admin #}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="icon" type="image/x-icon" href="{{ asset('f.ico') }}">
+{% endblock %}
