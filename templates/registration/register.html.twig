@@ -1,0 +1,59 @@
+{% extends 'base/base.html.twig' %}
+{% block body %}
+    <title>{% block title %}Register{% endblock %}</title>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 70px;">
+        <a class="navbar-brand" href="#">Mega Blog</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a class="nav-link" href="{{ path('app_login') }}">Login</a></li>
+            <li><a class="nav-link" href="{{ path('app_register') }}">Register</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 ml-md-auto">
+                <div class="card bg-light mb-3 mt-5" style="width: 800px">
+                    <div class="card-body">
+                        <div class="card-header mb-3">Create a new account</div>
+                        {{ form_start(registrationForm) }}
+                        <div class="form_group">
+                            <div class="col-md-12 mb-3">
+                                {{ form_row(registrationForm.name, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form_group">
+                            <div class="col-md-12 mb-3">
+                                {{ form_row(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form_group">
+                            <div class="col-md-12 mb-3">
+                                {{ form_row(registrationForm.password.first, {'attr': {'class':
+                                    'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form_group">
+                            <div class="col-md-12 mb-3">
+                                {{ form_row(registrationForm.password.second, {'attr': {'class':
+                                    'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form_group">
+                            <div class="col-md-12 mb-3">
+                                {{ form_row(registrationForm.terms) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-8 col-md-offset-4" style="margin-top:5px;">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-btn fa-user"></i> Register
+                                </button>
+                            </div>
+                        </div>
+                        {{ form_end(registrationForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

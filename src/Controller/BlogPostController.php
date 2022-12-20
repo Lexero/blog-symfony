@@ -11,18 +11,11 @@ use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 
 class BlogPostController extends AbstractController
 {
-    /** @var BlogPostRepository $postRepository */
-    private BlogPostRepository $blogPostRepository;
-
-    public function __construct(BlogPostRepository $postRepository)
-    {
-        $this->blogPostRepository = $postRepository;
-    }
-
     #[Route('/blog', name: 'blog')]
-    public function index(): Response
+    public function index(BlogPostRepository $postRepository): Response
     {
-        $posts = $this->blogPostRepository->findAll();
+        $blogPostRepository = $postRepository;
+        $posts = $blogPostRepository->findAll();
 
         return $this->render('blog.html.twig', [
             'posts' => $posts,

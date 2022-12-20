@@ -1,44 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('app/css/login-form.css') }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('f.ico') }}">
-<body>
+{% extends 'base/base.html.twig' %}
+{% block body %}
+    <title>{% block title %}Log in{% endblock %}</title>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 70px;">
+        <a class="navbar-brand" href="#">Mega Blog</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a class="nav-link" href="{{ path('app_login') }}">Login</a></li>
+            <li><a class="nav-link" href="{{ path('app_register') }}">Register</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 ml-md-auto">
+                <div class="">
+                    <div class="card bg-light mb-3 mt-5" style="width: 800px;">
+                        <div class="card-body">
+                            <form class="form-horizontal" role="form" method="post">
 
+                                {% if error %}
+                                    {% if error.message is defined %}
+                                        <div class="error">{{ error.message }}</div>
+                                    {% else %}
+                                        <div class="error">{{ error }}</div>
+                                    {% endif %}
+                                {% endif %}
 
-<main>
-    <div class="form-block">
-        <div class="logo">
-            <span style="color: #8C8C8C;">Mega Blog</span>
+                                <div class="card-header mb-3">Log in to your account</div>
+                                <div class="form-group">
+                                    <label for="email" class="col-md-4 control-label">Email</label>
+                                    <div class="col-md-12">
+                                        <input id="inputEmail" type="email" class="form-control" name="_username" value="{{ last_username }}" placeholder="Email" autofocus/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="col-md-4 control-label">Password</label>
+                                    <div class="col-md-12">
+                                        <input id="inputPassword" type="password" class="form-control" name="_password" placeholder="Password"/>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fa fa-btn fa-sign-in"></i>Login</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <form action="{{ path('login') }}" method="post">
-            <div class="form-title">Log in to your account</div>
-            {% if error %}
-                {% if error.message is defined %}
-                    <div class="error">{{ error.message }}</div>
-                {% else %}
-                    <div class="error">{{ error }}</div>
-                {% endif %}
-            {% endif %}
-            <div class="username">
-                <img src="{{ asset('app/img/icons/user.svg') }}">
-                <input type="text" id="username" name="_username" value="{{ last_username }}" placeholder="Email"/>
-            </div>
-            <div class="password">
-                <img src="{{ asset('app/img/icons/unlock.svg') }}">
-                <input type="password" id="password" name="_password" placeholder="Password"/>
-            </div>
-            <button type="submit">Log in</button>
-        </form>
-        <form action="{{ path('app_register') }}" method="get">
-            <div class="form-title">Don't have an account?</div>
-            <button type="submit">Sign up</button>
-        </form>
     </div>
-
-</main>
-</body>
-</html>
+{% endblock %}

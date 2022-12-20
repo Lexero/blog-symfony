@@ -30,12 +30,13 @@ security:
             lazy: false
             form_login:
                 provider: user
-                login_path: login
-                check_path: login
+                login_path: app_login
+                check_path: app_login
                 default_target_path: /blog
             logout:
-                path: logout
-                target: login
+                path: app_logout
+                target: app_login
+            user_checker: App\Security\VerificationUserChecker
 #            custom_authenticator: App\Security\UserAuthenticator
 
     # Note: Only the *first* access control that matches will be used
@@ -45,9 +46,9 @@ security:
         - { path: ^/register, roles: PUBLIC_ACCESS }
         - { path: ^/verify/email, roles: PUBLIC_ACCESS }
         - { path: ^/admin/login, roles: PUBLIC_ACCESS }
-        - { path: ^/admin, roles: ROLE_WRITER }
-        - { path: ^/blog, roles: ROLE_READER }
-        - { path: ^/, roles: ROLE_READER }
+        - { path: ^/admin, roles: !php/const App\DBAL\Types\Enum\UserRoleTypeEnum::ROLE_WRITER }
+        - { path: ^/blog, roles: !php/const App\DBAL\Types\Enum\UserRoleTypeEnum::ROLE_READER }
+        - { path: ^/, roles: !php/const App\DBAL\Types\Enum\UserRoleTypeEnum::ROLE_READER }
 
 when@test:
     security:
