@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\BlogPostRepository;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,11 +24,17 @@ class BlogPost
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
-    #[ORM\Column]
-    private ?\DateTime $created_at = null;
+    #[ORM\Column(name: "created_at")]
+    protected DateTime $createdAt;
 
     #[ORM\Column(length: 255)]
     private ?string $author = null;
+
+    public function __construct(User $author)
+    {
+        $this->setCreatedAt(new DateTime('now'));
+//        $this->setAuthor($author);
+    }
 
     public function getId(): ?int
     {
@@ -64,14 +71,14 @@ class BlogPost
         $this->slug = $slug;
     }
 
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): ?DateTime
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $created_at): void
+    public function setCreatedAt(DateTime $createdAt): void
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
     }
 
     public function getAuthor(): ?string

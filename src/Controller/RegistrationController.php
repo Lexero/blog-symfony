@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\DBAL\Types\Enum\UserRoleTypeEnum;
 use App\Entity\User;
+use App\Enum\UserRoleTypeEnum;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,6 +17,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class RegistrationController extends AbstractController
 {
@@ -79,7 +80,7 @@ class RegistrationController extends AbstractController
         $user->setEnable(true);
         $entityManager->persist($user);
         $entityManager->flush();
-        // TODO auth after verification
+//        TODO auth after verification
         $this->addFlash("success", "your email is verified");
 
         return $this->redirectToRoute('blog');

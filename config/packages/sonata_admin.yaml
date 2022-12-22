@@ -14,16 +14,14 @@ sonata_block:
             contexts: [admin]
 
 services:
-    admin.user:
-        class: App\Admin\UserWriter
+    sonata.user:
+        class: App\Admin\CreateUserAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\User, manager_type: orm, label: Users }
+            - { name: sonata.admin, model_class: App\Entity\User, manager_type: orm, label: Users, show_mosaic_button: false }
 
-#    sonata.blog_posts:
-#        class: App\Admin\BlogPostAdmin
-#        arguments: [ ~, App\Entity\BlogPost, App\Admin\AppCRUDController ]
-#        tags:
-#            - { name: sonata.admin, manager_type: orm, label: Blog posts, show_mosaic_button: false }
-#        calls:
-#            - [ setTitle, [ '@App\Form\CreateBlogPost' ] ]
-#            - [ setBody, [ '@App\Form\CreateBlogPost' ] ]
+    sonata.blog_posts:
+        class: App\Admin\BlogPostAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\BlogPost, manager_type: orm, label: Blog posts, show_mosaic_button: false }
+        calls:
+            - setTokenStorage: [ '@security.token_storage' ]
