@@ -8,6 +8,7 @@ use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Uuid;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -27,15 +29,16 @@ class RegistrationController extends AbstractController
                              EntityManagerInterface $entityManager,
                              MailerInterface $mailer): Response
     {
-//        dump($request->request->all());
         $user = new User();
 
         $form = $this->createForm(RegistrationFormType::class, $user);
 
         $form->handleRequest($request);
 
+
+
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+            //TODO UserCreatorService перенести всю логику в сервис
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -64,24 +67,26 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
-
+    //TODO #[MapEntity( инжектим юзера в контроллер
     #[Route('/verify/email/{confirmationCode}', name: 'app_verify_email')]
     public function verifyUserEmail(UserRepository $userRepository,
                                     EntityManagerInterface $entityManager,
+                                    TokenStorageInterface $tokenStorage,
                                     string $confirmationCode): Response
     {
-
+        //вот это все уйдет в инжект
         $user = $userRepository->findOneBy(["confirmationCode" => $confirmationCode, "verified" => false]);
         if (null === $user) {
             return $this->redirectToRoute('app_register');
         }
-        // validate email confirmation link, sets User::isVerified=true and persists
+        //TODO UserVerifier вынести логику
         $user->setVerified(true);
         $user->setEnable(true);
         $entityManager->persist($user);
         $entityManager->flush();
-//        TODO auth after verification
-        $this->addFlash("success", "your email is verified");
+
+        $token = new UsernamePasswordToken($user, "main", $user->getRoles());
+        $tokenStorage->setToken($token);
 
         return $this->redirectToRoute('blog');
     }

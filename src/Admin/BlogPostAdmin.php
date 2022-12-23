@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class BlogPostAdmin extends AbstractAdmin
 {
     private TokenStorageInterface $tokenStorage;
-
+    //TODO убрать кликабельность и добавить вместо этого кнопку edit
     protected function configureFormFields(FormMapper $form): void
     {
         $form->add('id', null, [
@@ -25,7 +25,7 @@ class BlogPostAdmin extends AbstractAdmin
             ->add('title', TextType::class)
             ->add('slug', TextType::class)
             ->add('body', TextType::class)
-            ->add('author')
+            ->add('author') //TODO убираем, нужно чтобы он сюда подтягивался из имени юзера создавшего пост
         ;
     }
 
@@ -35,7 +35,7 @@ class BlogPostAdmin extends AbstractAdmin
             ->add('id')
             ->add('title')
             ->add('slug')
-            ->add('created_at')
+            ->add('createdAt')
             ->add('author')
         ;
     }
@@ -46,7 +46,7 @@ class BlogPostAdmin extends AbstractAdmin
             ->addIdentifier('id')
             ->addIdentifier('title')
             ->addIdentifier('slug')
-            ->addIdentifier('created_at')
+            ->addIdentifier('createdAt')
             ->addIdentifier('author')
         ;
     }
@@ -57,7 +57,7 @@ class BlogPostAdmin extends AbstractAdmin
             ->add('id')
             ->add('title')
             ->add('slug')
-            ->add('created_at')
+            ->add('createdAt')
             ->add('author')
         ;
     }

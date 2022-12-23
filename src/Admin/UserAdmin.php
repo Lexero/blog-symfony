@@ -16,15 +16,14 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class CreateUserAdmin extends AbstractAdmin
+class UserAdmin extends AbstractAdmin
 {
-
+    //TODO тоже самое в блог пост админ
     protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection
             ->remove('create')
-            ->remove('delete')
-            ->remove('show');
+            ->remove('delete');
     }
 
     protected function configureFormFields(FormMapper $form): void
@@ -59,7 +58,7 @@ class CreateUserAdmin extends AbstractAdmin
     }
 
     protected function configureListFields(ListMapper $list): void
-    {
+    {//TODO Когда в списке кликаем по автору, то мы проваливаемся в этого юзера
         $list
             ->addIdentifier('id')
             ->addIdentifier('name')

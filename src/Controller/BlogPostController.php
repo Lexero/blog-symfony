@@ -14,8 +14,7 @@ class BlogPostController extends AbstractController
     #[Route('/blog', name: 'blog')]
     public function index(BlogPostRepository $postRepository): Response
     {
-        $blogPostRepository = $postRepository;
-        $posts = $blogPostRepository->findAll();
+        $posts = $postRepository->findBy(array(), array('createdAt' => 'DESC'));
 
         return $this->render('blog.html.twig', [
             'posts' => $posts,
