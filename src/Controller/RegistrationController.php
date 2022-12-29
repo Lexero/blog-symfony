@@ -3,62 +3,31 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Enum\UserRoleTypeEnum;
+use App\Service\UserCreatorService;
 use App\Form\RegistrationFormType;
-use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Ramsey\Uuid\Uuid;
+use App\Service\UserVerifierService;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Address;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request,
-                             UserPasswordHasherInterface $userPasswordHasher,
-                             EntityManagerInterface $entityManager,
-                             MailerInterface $mailer): Response
+    public function register(
+        Request             $request,
+        UserCreatorService  $creatorService,
+        UserVerifierService $verifierService
+    ): Response
     {
         $user = new User();
-
         $form = $this->createForm(RegistrationFormType::class, $user);
-
         $form->handleRequest($request);
 
-
-
         if ($form->isSubmitted() && $form->isValid()) {
-            //TODO UserCreatorService перенести всю логику в сервис
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('password')->getData()
-                )
-            );
-
-            $user->setRoles([UserRoleTypeEnum::ROLE_READER]);
-            $user->setConfirmationCode(Uuid::uuid6()->toString());
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            $email = new TemplatedEmail();
-            $email->from(new Address('mailer@your.com', 'Blog Admin'));
-            $email->to($user->getEmail());
-            $email->htmlTemplate('registration/confirmation_email.html.twig');
-            $email->subject("Hello! Please verify your email");
-            $email->context(['signedUrl' => $this->generateUrl("app_verify_email", ["confirmationCode" => $user->getConfirmationCode()], UrlGeneratorInterface::ABSOLUTE_URL)]);
-
-            $mailer->send($email);
+            $creatorService->registerUser($user, $form);
+            $verifierService->sendVerificationEmailToUser($user);
 
             return $this->redirectToRoute('app_login');
         }
@@ -67,26 +36,14 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
-    //TODO #[MapEntity( инжектим юзера в контроллер
-    #[Route('/verify/email/{confirmationCode}', name: 'app_verify_email')]
-    public function verifyUserEmail(UserRepository $userRepository,
-                                    EntityManagerInterface $entityManager,
-                                    TokenStorageInterface $tokenStorage,
-                                    string $confirmationCode): Response
-    {
-        //вот это все уйдет в инжект
-        $user = $userRepository->findOneBy(["confirmationCode" => $confirmationCode, "verified" => false]);
-        if (null === $user) {
-            return $this->redirectToRoute('app_register');
-        }
-        //TODO UserVerifier вынести логику
-        $user->setVerified(true);
-        $user->setEnable(true);
-        $entityManager->persist($user);
-        $entityManager->flush();
 
-        $token = new UsernamePasswordToken($user, "main", $user->getRoles());
-        $tokenStorage->setToken($token);
+    #[Route('/verify/email/{confirmationCode}', name: 'app_verify_email')]
+    public function verifyUserEmail(
+        #[MapEntity(mapping: ["confirmationCode" => "confirmationCode", "verified" => false])] User $user,
+        UserVerifierService                                                                         $verifierService
+    ): Response
+    {
+        $verifierService->verifyUser($user);
 
         return $this->redirectToRoute('blog');
     }
