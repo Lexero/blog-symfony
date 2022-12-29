@@ -21,7 +21,10 @@ services:
             - '../src/Kernel.php'
             - '../src/Tests/'
 
-    App\Tests\DataFixtures\AppFixtures:
+    App\Tests\DataFixtures\PostFixtures:
+        tags: ['doctrine.fixture.orm']
+
+    App\Tests\DataFixtures\AdminFixtures:
         tags: ['doctrine.fixture.orm']
 
     # add more service definitions when explicit configuration is needed
