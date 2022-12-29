@@ -37,7 +37,6 @@ class UserVerifierService
     public function verifyUser($user): void
     {
         $user->setVerified(true);
-        $user->setEnable(true);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 

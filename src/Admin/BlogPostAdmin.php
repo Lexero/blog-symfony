@@ -25,7 +25,7 @@ class BlogPostAdmin extends AbstractAdmin
             ->add('title', TextType::class)
             ->add('slug', TextType::class)
             ->add('body', TextType::class)
-            ->add('author') //TODO убираем, нужно чтобы он сюда подтягивался из имени юзера создавшего пост
+//            ->add('author') //TODO убираем, нужно чтобы он сюда подтягивался из имени юзера создавшего пост
         ;
     }
 
@@ -36,7 +36,7 @@ class BlogPostAdmin extends AbstractAdmin
             ->add('title')
             ->add('slug')
             ->add('createdAt')
-            ->add('author')
+//            ->add('author')
         ;
     }
 
@@ -47,7 +47,7 @@ class BlogPostAdmin extends AbstractAdmin
             ->addIdentifier('title')
             ->addIdentifier('slug')
             ->addIdentifier('createdAt')
-            ->addIdentifier('author')
+//            ->addIdentifier('author')
         ;
     }
 
@@ -58,7 +58,7 @@ class BlogPostAdmin extends AbstractAdmin
             ->add('title')
             ->add('slug')
             ->add('createdAt')
-            ->add('author')
+//            ->add('author')
         ;
     }
 

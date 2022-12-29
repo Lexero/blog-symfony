@@ -6,6 +6,8 @@ use App\Repository\BlogPostRepository;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 #[ORM\Entity(repositoryClass: BlogPostRepository::class)]
 class BlogPost
@@ -27,13 +29,14 @@ class BlogPost
     #[ORM\Column(name: "created_at")]
     protected DateTime $createdAt;
 
-    #[ORM\Column(length: 255)]
-    private ?string $author = null;
+    #[ManyToOne(targetEntity: User::class)]
+    #[JoinColumn(name: 'author_id', referencedColumnName: 'id')]
+    private User|null $author;
 
     public function __construct(User $author)
     {
         $this->setCreatedAt(new DateTime('now'));
-//        $this->setAuthor($author);
+        $this->author = $author;
     }
 
     public function getId(): ?int
@@ -81,12 +84,12 @@ class BlogPost
         $this->createdAt = $createdAt;
     }
 
-    public function getAuthor(): ?string
+    public function getAuthor(): User
     {
         return $this->author;
     }
 
-    public function setAuthor(string $author): void
+    public function setAuthor(User $author): void
     {
         $this->author = $author;
     }

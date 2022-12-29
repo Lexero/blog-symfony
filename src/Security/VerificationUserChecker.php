@@ -20,8 +20,8 @@ class VerificationUserChecker implements UserCheckerInterface
 
     public function checkPostAuth(UserInterface $user)
     {
-        if ($user instanceof User && !$user->getEnabled()) {
-            throw new AccountExpiredException("Account was disabled");
+        if ($user instanceof User && !$user->isVerified()) {
+            throw new LockedException();
         }
     }
 }

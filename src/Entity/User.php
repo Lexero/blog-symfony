@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
+#[ORM\Table(name: 'users_table')]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -30,9 +30,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?string $confirmationCode = null;
-
-    #[ORM\Column(type: 'boolean')]
-    private bool $enabled = false;
 
     #[ORM\Column]
     private ?string $password = null;
@@ -142,23 +139,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setConfirmationCode(string $confirmationCode): void
     {
         $this->confirmationCode = $confirmationCode;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getEnabled(): bool
-    {
-        return $this->enabled;
-    }
-
-    /**
-     * @param bool $enabled
-     *
-     * @return User
-     */
-    public function setEnable(bool $enabled): void
-    {
-        $this->enabled = $enabled;
     }
 }
