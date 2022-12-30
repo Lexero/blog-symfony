@@ -3,13 +3,11 @@
 namespace App\Admin;
 
 use App\Entity\BlogPost;
-use App\Entity\StaffUser;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
-use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -27,10 +25,10 @@ class BlogPostAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form->add('id', null, [
-                'attr' => [
-                    'readonly' => true,
-                ],
-            ])
+            'attr' => [
+                'readonly' => true,
+            ],
+        ])
             ->add('title', TextType::class)
             ->add('slug', TextType::class)
             ->add('body', TextType::class)
@@ -49,18 +47,26 @@ class BlogPostAdmin extends AbstractAdmin
     }
 
     protected function configureListFields(ListMapper $list): void
-    {//TODO Когда в списке кликаем по автору, то мы проваливаемся в этого юзера
+    {
         $list
             ->add('id')
             ->add('title')
             ->add('slug')
             ->add('createdAt')
+            ->add('author',
+                null,
+                [
+                    'associated_property' => 'name',
+                    'admin_code' => 'sonata.user',
+                    'route' => [
+                        'name' => 'edit'
+                    ]
+                ])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
                     'edit' => [],
                 ],
             ])
-//            ->add('author')
         ;
     }
 

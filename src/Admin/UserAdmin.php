@@ -68,7 +68,9 @@ class UserAdmin extends AbstractAdmin
             ->add('id')
             ->add('name')
             ->add('email')
-            ->add('roles')
+            ->add('roles', null, [
+                'template' => 'admin/roles.html.twig',
+            ])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
                     'edit' => [],
