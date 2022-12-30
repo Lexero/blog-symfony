@@ -133,8 +133,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @param string $confirmationCode
-     *
-     * @return User
      */
     public function setConfirmationCode(string $confirmationCode): void
     {

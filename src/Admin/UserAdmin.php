@@ -7,23 +7,25 @@ namespace App\Admin;
 
 use App\Enum\UserRoleTypeEnum;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Validator\Constraints\Length;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class UserAdmin extends AbstractAdmin
 {
-    //TODO тоже самое в блог пост админ
+
     protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection
             ->remove('create')
-            ->remove('delete');
+            ->remove('show')
+            ->remove('delete')
+        ;
     }
 
     protected function configureFormFields(FormMapper $form): void
@@ -36,10 +38,14 @@ class UserAdmin extends AbstractAdmin
             ])
             ->add('name', TextType::class, [
                 'constraints' => [
-                    new Length(['min' => 4, 'max' => 200]),
+                    new Length(['min' => 3, 'max' => 100]),
                 ],
             ])
-            ->add('email', TextType::class)
+            ->add('email', TextType::class, [
+                'constraints' => [
+                    new Length(['min' => 3, 'max' => 100]),
+                ],
+            ])
             ->add('roles', ChoiceType::class, [
                 'choices'  => UserRoleTypeEnum::getValues(),
                 'multiple' => true,
@@ -50,7 +56,6 @@ class UserAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagrid): void
     {
         $datagrid
-            ->add('id')
             ->add('name')
             ->add('email')
             ->add('roles')
@@ -58,22 +63,27 @@ class UserAdmin extends AbstractAdmin
     }
 
     protected function configureListFields(ListMapper $list): void
-    {//TODO Когда в списке кликаем по автору, то мы проваливаемся в этого юзера
-        $list
-            ->addIdentifier('id')
-            ->addIdentifier('name')
-            ->addIdentifier('email')
-            ->addIdentifier('roles')
-        ;
-    }
-
-    protected function configureShowFields(ShowMapper $show): void
     {
-        $show
+        $list
             ->add('id')
             ->add('name')
             ->add('email')
             ->add('roles')
+            ->add(ListMapper::NAME_ACTIONS, null, [
+                'actions' => [
+                    'edit' => [],
+                ],
+            ])
         ;
+    }
+
+    protected function configureFormOptions(array &$formOptions): void
+    {
+        parent::configureFormOptions($formOptions);
+        $formOptions['constraints'] = [
+            new UniqueEntity([
+                'fields' => ['email'],
+            ]),
+        ];
     }
 }
