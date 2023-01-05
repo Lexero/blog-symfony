@@ -7,6 +7,16 @@ sonata_admin:
     dashboard:
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
+        groups:
+            sonata.group.users:
+                label: 'Users'
+                items:
+                    - sonata.user
+
+            sonata.group.blog.posts:
+                label: 'Edit blog'
+                items:
+                    - sonata.blog.posts
 
 sonata_block:
     blocks:
@@ -17,11 +27,11 @@ services:
     sonata.user:
         class: App\Admin\UserAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\User, manager_type: orm, label: Users, show_mosaic_button: false }
+            - { name: sonata.admin, model_class: App\Entity\User, manager_type: orm, label: 'Users', show_mosaic_button: false }
 
-    sonata.blog_posts:
+    sonata.blog.posts:
         class: App\Admin\BlogPostAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\BlogPost, manager_type: orm, label: Blog posts, show_mosaic_button: false }
+            - { name: sonata.admin, model_class: App\Entity\BlogPost, manager_type: orm, label: 'Blog posts', show_mosaic_button: false }
         calls:
             - setTokenStorage: [ '@security.token_storage' ]

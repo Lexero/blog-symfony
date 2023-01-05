@@ -42,7 +42,15 @@ class BlogPostAdmin extends AbstractAdmin
             ->add('title')
             ->add('slug')
             ->add('createdAt')
-//            ->add('author') //TODO фильтр по постам по автору поста
+            ->add(
+                'author',
+                null,
+                [
+                    'field_options' => [
+                        'choice_label' => 'name',
+                    ],
+                ],
+            )
         ;
     }
 
