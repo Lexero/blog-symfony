@@ -35,7 +35,7 @@ class BlogPost
 
     public function __construct(User $author)
     {
-        $this->setCreatedAt(new DateTime('now'));
+        $this->createdAt = new DateTime('now');
         $this->author = $author;
     }
 
@@ -79,18 +79,8 @@ class BlogPost
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTime $createdAt): void
-    {
-        $this->createdAt = $createdAt;
-    }
-
     public function getAuthor(): User
     {
         return $this->author;
-    }
-
-    public function setAuthor(User $author): void
-    {
-        $this->author = $author;
     }
 }

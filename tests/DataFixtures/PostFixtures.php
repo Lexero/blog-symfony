@@ -36,7 +36,6 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
             $post->setTitle($this->faker->text(100));
             $post->setSlug($this->slug->slugify($post->getTitle()));
             $post->setBody($this->faker->text(1000));
-            $post->setCreatedAt($this->faker->dateTime);
 
             $manager->persist($post);
         }

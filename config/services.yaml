@@ -21,6 +21,9 @@ services:
             - '../src/Kernel.php'
             - '../src/Tests/'
 
+    Cocur\Slugify\Slugify:
+        autowire: true
+
     App\Tests\DataFixtures\PostFixtures:
         tags: ['doctrine.fixture.orm']
 

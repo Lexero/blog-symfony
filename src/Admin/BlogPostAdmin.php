@@ -3,18 +3,34 @@
 namespace App\Admin;
 
 use App\Entity\BlogPost;
+use Cocur\Slugify\SlugifyInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class BlogPostAdmin extends AbstractAdmin
 {
     private TokenStorageInterface $tokenStorage;
+
+    private SlugifyInterface $slug;
+
+    public function setSlugify(SlugifyInterface $slugify): void
+    {
+        $this->slug = $slugify;
+    }
+
+    public function prePersist($object): void
+    {
+        if ($object instanceof BlogPost) {
+            $object->setSlug($this->slug->slugify($object->getTitle()));
+        }
+    }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void
     {
@@ -30,9 +46,15 @@ class BlogPostAdmin extends AbstractAdmin
             ],
         ])
             ->add('title', TextType::class)
-            ->add('slug', TextType::class)
-            ->add('body', TextType::class)
+            ->add('body', TextareaType::class, [
+                'attr' => ['style' => 'height:200px'],
+            ])
         ;
+        $form->add('slug', TextType::class, [
+            'attr' => [
+                'readonly' => true,
+            ],
+        ]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagrid): void
@@ -40,7 +62,6 @@ class BlogPostAdmin extends AbstractAdmin
         $datagrid
             ->add('id')
             ->add('title')
-            ->add('slug')
             ->add('createdAt')
             ->add(
                 'author',
@@ -59,7 +80,6 @@ class BlogPostAdmin extends AbstractAdmin
         $list
             ->add('id')
             ->add('title')
-            ->add('slug')
             ->add('createdAt')
             ->add('author',
                 null,
@@ -97,5 +117,4 @@ class BlogPostAdmin extends AbstractAdmin
     {
         $this->tokenStorage = $tokenStorage;
     }
-
 }
