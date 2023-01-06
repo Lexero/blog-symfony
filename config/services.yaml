@@ -30,6 +30,14 @@ services:
     App\Tests\DataFixtures\AdminFixtures:
         tags: ['doctrine.fixture.orm']
 
+    Redis:
+        class: \Redis
+        calls:
+            - method: connect
+              arguments: [ '%env(REDIS_HOST)%', '%env(REDIS_PORT)%' ]
+            - method: select
+              arguments: [ '%env(REDIS_DATABASE)%' ]
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
