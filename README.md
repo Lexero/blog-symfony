@@ -2,6 +2,7 @@
 Pet project blog on symphony 6.2
 
 ## Installation
+* docker-compose build
 * docker-compose up -d
 * docker-compose exec php bash
 * bin/console doctrine:migrations:migrate
