@@ -12,7 +12,7 @@ use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 class BlogPostController extends AbstractController
 {
     #[Route('/blog', name: 'blog')]
-    public function index(BlogPostRepository $postRepository): Response
+    public function blog(BlogPostRepository $postRepository): Response
     {
         $posts = $postRepository->findBy(array(), array('createdAt' => 'DESC'));
 
