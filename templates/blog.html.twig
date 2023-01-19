@@ -34,10 +34,18 @@
     <section class="main-col">
         {% block body %}
             {% for post in posts %}
+                <article class="post">
+                    <div class="date"><time datetime="{{ post.createdAt|date('c') }}">{{ post.createdAt|date('l, F j, Y') }}</time></div>
                 <a href="{{ path('post_view', {'slug': post.slug}) }}"> <p> {{ post.title }} <p> </a>
-                <p> {{ post.body }} <p>
+                <div class="snippet">
+                    <p>{{ post.body(500) }}</p>
+                    <p class="continue"><a href="{{ path('post_view', {'slug': post.slug}) }}">Continue reading...</a></p>
+                </div>
+                <p>Posted by <span class="highlight">{{post.author.name}}</span> at {{ post.createdAt|date('h:iA') }}</p>
                 <br>
-                <br>
+                </article>
+            {% else %}
+                <p>There are no blog post yet</p>
             {% endfor %}
         {% endblock %}
     </section>

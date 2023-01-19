@@ -22,12 +22,12 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
         $this->slug = $slugify;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->loadPost($manager);
     }
 
-    public function loadPost(ObjectManager $manager)
+    public function loadPost(ObjectManager $manager): void
     {
         $user = $this->getReference("admin");
 
