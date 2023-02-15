@@ -12,6 +12,17 @@ services:
     expose:
       - "9000"
 
+  php-messenger:
+    build:
+      dockerfile: ./docker/dev/php/Dockerfile
+    depends_on:
+      - db
+      - rabbitmq
+    volumes:
+      - ./:/var/www/html
+      - trash:/var/www/
+    command: ["bin/console", "messenger:consume", "-vv"]
+
   mailhog:
     image: mailhog/mailhog
     logging:
