@@ -62,19 +62,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->name = $name;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
     }
-
-    /**
-     * @see UserInterface
-     */
 
     public function getRoles(): array
     {
@@ -91,9 +82,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->roles = $roles;
     }
 
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
     public function getPassword(): string
     {
         return $this->password;
@@ -104,9 +92,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->password = $password;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
@@ -123,17 +108,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->verified = $verified;
     }
 
-    /**
-     * @return string
-     */
     public function getConfirmationCode(): string
     {
         return $this->confirmationCode;
     }
 
-    /**
-     * @param string $confirmationCode
-     */
     public function setConfirmationCode(string $confirmationCode): void
     {
         $this->confirmationCode = $confirmationCode;
