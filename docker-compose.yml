@@ -12,6 +12,17 @@ services:
     expose:
       - "9000"
 
+  php-messenger:
+    build:
+      dockerfile: ./docker/dev/php/Dockerfile
+    depends_on:
+      - db
+      - rabbitmq
+    volumes:
+      - ./:/var/www/html
+      - trash:/var/www/
+    command: ["bin/console", "messenger:consume", "-vv"]
+
   mailhog:
     image: mailhog/mailhog
     logging:
@@ -48,6 +59,15 @@ services:
     image: redis:6.2-alpine
     ports:
       - '6379:6379'
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
 
 volumes:
   db:
