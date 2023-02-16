@@ -25,6 +25,11 @@ class BlogPostAdmin extends AbstractAdmin
         $this->slug = $slugify;
     }
 
+    public function postPersist($object): void
+    {
+        $this->getRequest()->getSession()->getFlashBag()->add("success", "Blog post has been successfully created");
+    }
+
     public function prePersist($object): void
     {
         if ($object instanceof BlogPost) {
@@ -48,8 +53,7 @@ class BlogPostAdmin extends AbstractAdmin
             ->add('title', TextType::class)
             ->add('body', TextareaType::class, [
                 'attr' => ['style' => 'height:200px'],
-            ])
-        ;
+            ]);
         $form->add('slug', TextType::class, [
             'attr' => [
                 'readonly' => true,
@@ -71,8 +75,7 @@ class BlogPostAdmin extends AbstractAdmin
                         'choice_label' => 'name',
                     ],
                 ],
-            )
-        ;
+            );
     }
 
     protected function configureListFields(ListMapper $list): void
@@ -94,8 +97,7 @@ class BlogPostAdmin extends AbstractAdmin
                 'actions' => [
                     'edit' => [],
                 ],
-            ])
-        ;
+            ]);
     }
 
     protected function configureFormOptions(array &$formOptions): void

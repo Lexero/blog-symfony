@@ -49,7 +49,7 @@ class UserVerifierService
         $email = new TemplatedEmail();
         $email->from(new Address('mailer@your.com', 'Blog Admin'));
         $email->to($user->getEmail());
-        $email->htmlTemplate('registration/confirmation_email.html.twig');
+        $email->htmlTemplate('login/confirmation_email.html.twig');
         $email->subject("Hello! Please verify your email");
         $email->context([
             'signedUrl' => $this->router->generate(

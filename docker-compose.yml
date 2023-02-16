@@ -24,7 +24,6 @@ services:
       - php
 
   nginx:
-    #    container_name: nginx
     image: nginx
     depends_on:
       - php
@@ -33,7 +32,6 @@ services:
     volumes:
       - ./docker/dev/nginx/symfony.conf:/etc/nginx/conf.d/default.conf
       - ./:/var/www/html
-#      - ./var/log:/var/log/nginx
 
   db:
     image: postgres:15
@@ -48,7 +46,6 @@ services:
 
   redis:
     image: redis:6.2-alpine
-    restart: always
     ports:
       - '6379:6379'
 
