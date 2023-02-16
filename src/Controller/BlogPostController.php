@@ -12,11 +12,11 @@ use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 class BlogPostController extends AbstractController
 {
     #[Route('/blog', name: 'blog')]
-    public function index(BlogPostRepository $postRepository): Response
+    public function blog(BlogPostRepository $postRepository): Response
     {
         $posts = $postRepository->findBy(array(), array('createdAt' => 'DESC'));
 
-        return $this->render('blog.html.twig', [
+        return $this->render('blog/mainpage.html.twig', [
             'posts' => $posts,
             'controller_name' => 'BlogPostController',
         ]);
@@ -25,7 +25,7 @@ class BlogPostController extends AbstractController
     #[Route('/blog/{slug}', name: 'post_view')]
     public function post(#[MapEntity(mapping: ['slug' => 'slug'])] BlogPost $post): Response
     {
-        return $this->render('post.html.twig', [
+        return $this->render('blog/post.html.twig', [
             'post' => $post
         ]);
     }

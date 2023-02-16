@@ -24,15 +24,18 @@ sonata_block:
             contexts: [admin]
 
 services:
+    App\Controller\AdminCRUDController:
+        tags: [container.service_subscriber]
+
     sonata.user:
         class: App\Admin\UserAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\User, manager_type: orm, label: 'Users', show_mosaic_button: false }
+            - { name: sonata.admin, model_class: App\Entity\User, controller: App\Controller\AdminCRUDController, manager_type: orm, label: 'Users', show_mosaic_button: false }
 
     sonata.blog.posts:
         class: App\Admin\BlogPostAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\BlogPost, manager_type: orm, label: 'Blog posts', show_mosaic_button: false }
+            - { name: sonata.admin, model_class: App\Entity\BlogPost, controller: App\Controller\AdminCRUDController, manager_type: orm, label: 'Blog posts', show_mosaic_button: false }
         calls:
             - setTokenStorage: [ '@security.token_storage' ]
             - setSlugify: [ '@Cocur\Slugify\Slugify' ]

@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 
 #[ORM\Entity(repositoryClass: BlogPostRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class BlogPost
 {
     #[ORM\Id]
@@ -28,6 +29,9 @@ class BlogPost
 
     #[ORM\Column(name: "created_at")]
     protected DateTime $createdAt;
+
+    #[ORM\Column(name: "updated_at")]
+    protected DateTime $updatedAt;
 
     #[ManyToOne(targetEntity: User::class)]
     #[JoinColumn(name: 'author_id', referencedColumnName: 'id')]
@@ -74,9 +78,21 @@ class BlogPost
         $this->slug = $slug;
     }
 
-    public function getCreatedAt(): ?DateTime
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    #[ORM\PreUpdate]
+    #[ORM\PrePersist]
+    public function refreshUpdatedAt(): void
+    {
+        $this->updatedAt = new DateTime('now');
     }
 
     public function getAuthor(): User
