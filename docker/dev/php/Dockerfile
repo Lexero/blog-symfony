@@ -15,12 +15,18 @@ RUN apt-get update && apt-get install -y \
     && pecl install redis \
     && docker-php-ext-enable redis
 
+#RabbitMQ
+RUN apt-get install -y \
+    librabbitmq-dev \
+    libssl-dev \
+    && pecl install amqp \
+    && docker-php-ext-enable amqp
+
 RUN apt clean
 
-#RabbitMQ
-RUN apt-get install -y librabbitmq-dev libssl-dev && pecl install amqp && docker-php-ext-enable amqp
-
-RUN pecl install xdebug && docker-php-ext-enable xdebug
+#Xdebug
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
 COPY ./docker/dev/php/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 # Composer
