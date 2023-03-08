@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\User;
@@ -28,6 +30,8 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $creatorService->registerUser($user, $form);
             $verifierService->sendVerificationEmailToUser($user);
+
+            $this->addFlash('success-sent', 'Please, confirm your email!');
 
             return $this->redirectToRoute('app_login');
         }

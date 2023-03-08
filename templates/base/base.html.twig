@@ -7,6 +7,11 @@
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
+{% for flashMessage in app.flashes('success-sent') %}
+    <div class="alert-success">
+        {{ flashMessage }}
+    </div>
+{% endfor %}
 {% block body %}{% endblock %} {% block javascripts %}{% endblock %}
 </body>
 </html>
