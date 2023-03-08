@@ -59,7 +59,9 @@ class UserVerifierService
                 "app_verify_email",
                 ["confirmationCode" => $user->getConfirmationCode()],
                 UrlGeneratorInterface::ABSOLUTE_URL
-            )
+            ),
+            'expiration_date' => new \DateTime('+7 days'),
+            'name'            => $user->getName()
         ]);
 
         $this->mailer->send($email);
