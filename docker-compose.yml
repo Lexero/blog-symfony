@@ -21,7 +21,7 @@ services:
     volumes:
       - ./:/var/www/html
       - trash:/var/www/
-    command: ["bin/console", "messenger:consume", "-vv"]
+    command: ["bin/console", "messenger:consume", "async", "-vv"]
 
   mailhog:
     image: mailhog/mailhog
