@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
+use App\Enum\RegistrationEmailEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
@@ -47,10 +50,10 @@ class UserVerifierService
     public function sendVerificationEmailToUser($user): void
     {
         $email = new TemplatedEmail();
-        $email->from(new Address('mailer@your.com', 'Blog Admin'));
+        $email->from(new Address(RegistrationEmailEnum::SENDER_ADDRESS, RegistrationEmailEnum::SENDER_NAME));
         $email->to($user->getEmail());
         $email->htmlTemplate('login/confirmation_email.html.twig');
-        $email->subject("Hello! Please verify your email");
+        $email->subject(RegistrationEmailEnum::EMAIL_TEXT);
         $email->context([
             'signedUrl' => $this->router->generate(
                 "app_verify_email",
