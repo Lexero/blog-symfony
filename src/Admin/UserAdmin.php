@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Admin;
 
 use App\Enum\UserRoleTypeEnum;
@@ -24,8 +23,7 @@ class UserAdmin extends AbstractAdmin
         $collection
             ->remove('create')
             ->remove('show')
-            ->remove('delete')
-        ;
+            ->remove('delete');
     }
 
     protected function configureFormFields(FormMapper $form): void
@@ -49,17 +47,15 @@ class UserAdmin extends AbstractAdmin
             ->add('roles', ChoiceType::class, [
                 'choices'  => UserRoleTypeEnum::getValues(),
                 'multiple' => true,
-            ])
-        ;
+            ]);
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagrid): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagrid
+        $filter
             ->add('name')
             ->add('email')
-            ->add('roles')
-        ;
+            ->add('roles');
     }
 
     protected function configureListFields(ListMapper $list): void
@@ -75,8 +71,7 @@ class UserAdmin extends AbstractAdmin
                 'actions' => [
                     'edit' => [],
                 ],
-            ])
-        ;
+            ]);
     }
 
     protected function configureFormOptions(array &$formOptions): void

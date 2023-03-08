@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use Redis;
@@ -29,7 +31,7 @@ class Locker
 
     public function refreshLock(string $key, int $userId, int $ttl = 300): void
     {
-        if ($this->getLockedBy($key) === $userId){
+        if ($this->getLockedBy($key) === $userId) {
             $this->redis->expire($key, $ttl);
         }
     }

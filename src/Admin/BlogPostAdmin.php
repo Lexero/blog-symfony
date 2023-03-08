@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Admin;
 
 use App\Entity\BlogPost;
@@ -61,9 +63,9 @@ class BlogPostAdmin extends AbstractAdmin
         ]);
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagrid): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagrid
+        $filter
             ->add('id')
             ->add('title')
             ->add('createdAt')
