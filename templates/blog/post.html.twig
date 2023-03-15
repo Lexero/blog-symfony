@@ -11,5 +11,6 @@
         <div>
             <p>{{ post.body }}</p>
         </div>
+        <p>Posted by <span class="highlight">{{post.author.name}}</span> at {{ post.createdAt|date('h:iA') }}</p>
     </article>
 {% endblock %}

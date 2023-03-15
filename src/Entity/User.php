@@ -96,7 +96,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function eraseCredentials()
     {
-         $this->password = null;
+//         $this->password = null;
     }
 
     public function isVerified(): bool

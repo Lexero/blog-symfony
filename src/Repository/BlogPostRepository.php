@@ -23,6 +23,19 @@ class BlogPostRepository extends ServiceEntityRepository
         parent::__construct($registry, BlogPost::class);
     }
 
+    public function getLatestBlogs($limit = null)
+    {
+        $qb = $this->createQueryBuilder('bp')
+            ->select('bp')
+            ->addOrderBy('bp.createdAt', 'DESC');
+
+        if ($limit !== null)
+            $qb->setMaxResults($limit);
+
+        return $qb->getQuery()
+            ->getResult();
+    }
+
     public function save(BlogPost $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -46,10 +59,10 @@ class BlogPostRepository extends ServiceEntityRepository
      */
     public function findByExampleField($value): array
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
+        return $this->createQueryBuilder('bp')
+            ->andWhere('bp.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
+            ->orderBy('bp.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
@@ -57,8 +70,8 @@ class BlogPostRepository extends ServiceEntityRepository
 
     public function findOneBySomeField($value): ?BlogPost
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
+        return $this->createQueryBuilder('bp')
+            ->andWhere('bp.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult();

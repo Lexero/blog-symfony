@@ -26,8 +26,8 @@
         </div>
 
         <hgroup>
-            <h2>{% block blog_title %}<a href="#">Mega Blog</a>{% endblock %}</h2>
-            <h3>{% block blog_tagline %}<a href="#">creating a blog in Symfony6</a>{% endblock %}</h3>
+            <h2>{% block blog_title %}<a href="{{ path('blog') }}">Mega Blog</a>{% endblock %}</h2>
+            <h3>{% block blog_tagline %}<a href="{{ path('blog') }}">creating a blog in Symfony6</a>{% endblock %}</h3>
         </hgroup>
     </header>
 
