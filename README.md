@@ -10,3 +10,6 @@ Pet project blog on symphony 6.2
 * `composer install`
 * `bin/console doctrine:migrations:migrate`
 * `bin/console doctrine:fixtures:load`
+
+## Run tests
+* `./vendor/bin/phpunit -c ./tests/phpunit.xml.dist`
