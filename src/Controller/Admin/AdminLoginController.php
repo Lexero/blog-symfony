@@ -12,7 +12,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AdminLoginController extends AbstractController
 {
-    #[Route(path: '/login', name: 'admin_login')]
+    #[Route(path: '/login', name: 'login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -25,7 +25,7 @@ class AdminLoginController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/logout', name: 'admin_logout')]
+    #[Route(path: '/logout', name: 'logout')]
     public function logout(TokenStorage $tokenStorage): Response
     {
         $tokenStorage->setToken();

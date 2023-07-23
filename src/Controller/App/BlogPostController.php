@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Public;
+namespace App\Controller\App;
 
 use App\Entity\BlogPost;
 use App\Repository\BlogPostRepository;

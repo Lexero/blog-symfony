@@ -6,10 +6,12 @@ admin_controllers:
     resource: ../src/Controller/Admin/
     type: annotation
     prefix: /admin
+    name_prefix: 'admin_'
 
-public_controllers:
+app_controllers:
     resource: ../src/Controller/Public/
     type: annotation
+    name_prefix: 'app_'
 
 kernel:
     resource: ../src/Kernel.php
