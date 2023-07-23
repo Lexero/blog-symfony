@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Public;
 
 use App\Entity\User;
-use App\Service\UserCreatorService;
 use App\Form\RegistrationFormType;
+use App\Service\UserCreatorService;
 use App\Service\UserVerifierService;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RegistrationController extends AbstractController
 {
-    #[Route('/register', name: 'app_register')]
+    #[Route(path: '/register', name: 'app_register')]
     public function register(
         Request             $request,
         UserCreatorService  $creatorService,
@@ -41,7 +41,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/verify/email/{confirmationCode}', name: 'app_verify_email')]
+    #[Route(path: '/verify/email/{confirmationCode}', name: 'app_verify_email')]
     public function verifyUserEmail(
         #[MapEntity(mapping: ["confirmationCode" => "confirmationCode", "verified" => false])] User $user,
         UserVerifierService                                                                         $verifierService

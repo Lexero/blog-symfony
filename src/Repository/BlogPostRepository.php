@@ -23,7 +23,7 @@ class BlogPostRepository extends ServiceEntityRepository
         parent::__construct($registry, BlogPost::class);
     }
 
-    public function getLatestBlogs($limit = null)
+    public function getLatestPosts($limit = null)
     {
         $qb = $this->createQueryBuilder('bp')
             ->select('bp')

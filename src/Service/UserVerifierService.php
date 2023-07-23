@@ -61,7 +61,7 @@ class UserVerifierService
                 UrlGeneratorInterface::ABSOLUTE_URL
             ),
             'expiration_date' => new \DateTime('+7 days'),
-            'name'            => $user->getName()
+            'name' => $user->getName()
         ]);
 
         $this->mailer->send($email);
