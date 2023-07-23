@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd" backupGlobals="false" colors="true" bootstrap="../vendor/autoload.php" failOnRisky="true" failOnWarning="true" cacheDirectory=".phpunit.cache">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd" backupGlobals="false" colors="true" bootstrap="bootstrap.php" cacheDirectory=".phpunit.cache">
   <php>
     <server name="KERNEL_CLASS" value="App\Kernel"/>
     <ini name="display_errors" value="1"/>
@@ -10,19 +10,12 @@
     <server name="SYMFONY_PHPUNIT_VERSION" value="9.5"/>
     <server name="DATABASE_URL" value="postgresql://blog:blog@db:5432/blog?serverVersion=15&amp;charset=utf8"/>
   </php>
-
-  <coverage>
-    <include>
-      <directory>src</directory>
-    </include>
-  </coverage>
-
   <testsuites>
     <testsuite name="System Tests">
-      <directory>./SystemTests/</directory>
+      <directory>./System/</directory>
     </testsuite>
     <testsuite name="Unit Tests">
-      <directory>./UnitTests/</directory>
+      <directory>./Unit/</directory>
     </testsuite>
   </testsuites>
 </phpunit>
