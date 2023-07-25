@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Enum\RegistrationEmailEnum;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
@@ -60,7 +61,7 @@ class UserVerifier
                 ["confirmationCode" => $user->getConfirmationCode()],
                 UrlGeneratorInterface::ABSOLUTE_URL
             ),
-            'expiration_date' => new \DateTime('+7 days'),
+            'expiration_date' => new DateTime('+7 days'),
             'name' => $user->getName()
         ]);
 

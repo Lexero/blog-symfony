@@ -18,7 +18,7 @@
             {% block navigation %}
                 <nav>
                     <ul class="navigation">
-                        <li><a class="nav-link" href="{{ path('blog') }}">View List</a></li>
+                        <li><a class="nav-link" href="{{ path('main') }}">View List</a></li>
                         <li><a class="nav-link" href="{{ path('logout') }}">Logout</a></li>
                     </ul>
                 </nav>
@@ -26,8 +26,8 @@
         </div>
 
         <hgroup>
-            <h2>{% block blog_title %}<a href="{{ path('blog') }}">Mega Blog</a>{% endblock %}</h2>
-            <h3>{% block blog_tagline %}<a href="{{ path('blog') }}">creating a blog in Symfony6</a>{% endblock %}</h3>
+            <h2>{% block blog_title %}<a href="{{ path('main') }}">Mega Blog</a>{% endblock %}</h2>
+            <h3>{% block blog_tagline %}<a href="{{ path('main') }}">creating a blog in Symfony6</a>{% endblock %}</h3>
         </hgroup>
     </header>
 
@@ -45,7 +45,7 @@
                 <br>
                 </article>
             {% else %}
-                <p>There are no blog post yet</p>
+                <p>There are no blog posts here yet</p>
             {% endfor %}
         {% endblock %}
     </section>

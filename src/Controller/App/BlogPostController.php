@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BlogPostController extends AbstractController
 {
-    #[Route(path: '/blog', name: 'blog')]
+    #[Route(path: '/posts', name: 'main')]
     public function blog(BlogPostRepository $postRepository): Response
     {
         $posts = $postRepository->getLatestPosts(15);
@@ -24,7 +24,7 @@ class BlogPostController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/blog/{slug}', name: 'post_view')]
+    #[Route(path: '/post/{slug}', name: 'post_view')]
     public function post(#[MapEntity(mapping: ['slug' => 'slug'])] BlogPost $post): Response
     {
         return $this->render('blog/post.html.twig', [

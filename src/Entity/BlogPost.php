@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 
 #[ORM\Entity(repositoryClass: BlogPostRepository::class)]
+#[ORM\Table(name: 'posts')]
 #[ORM\HasLifecycleCallbacks]
 class BlogPost
 {

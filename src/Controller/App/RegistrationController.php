@@ -49,6 +49,6 @@ class RegistrationController extends AbstractController
     {
         $verifierService->verifyUser($user);
 
-        return $this->redirectToRoute('blog');
+        return $this->redirectToRoute('main');
     }
 }

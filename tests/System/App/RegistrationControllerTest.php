@@ -33,6 +33,6 @@ class RegistrationControllerTest extends WebTestCase
         $client = static::createClient();
         $client->request('GET', '/verify/email/12345');
 
-        $this->assertResponseRedirects('/blog');
+        $this->assertResponseRedirects('/posts');
     }
 }

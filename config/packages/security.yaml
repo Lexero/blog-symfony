@@ -32,7 +32,7 @@ security:
                 provider: user
                 login_path: login
                 check_path: login
-                default_target_path: /blog
+                default_target_path: /posts
             logout:
                 path: logout
                 target: login
@@ -47,7 +47,7 @@ security:
         - { path: ^/verify/email, roles: PUBLIC_ACCESS }
         - { path: ^/admin/login, roles: PUBLIC_ACCESS }
         - { path: ^/admin, roles: !php/const App\Enum\UserRoleEnum::ROLE_WRITER }
-        - { path: ^/blog, roles: !php/const App\Enum\UserRoleEnum::ROLE_READER }
+        - { path: ^/posts, roles: !php/const App\Enum\UserRoleEnum::ROLE_READER }
         - { path: ^/, roles: !php/const App\Enum\UserRoleEnum::ROLE_READER }
 
 when@test:
