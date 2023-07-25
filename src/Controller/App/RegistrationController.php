@@ -43,7 +43,7 @@ class RegistrationController extends AbstractController
 
     #[Route(path: '/verify/email/{confirmationCode}', name: 'verify_email', methods: ['GET', 'POST'])]
     public function verifyUserEmail(
-        #[MapEntity(mapping: ["confirmationCode" => "confirmationCode", "verified" => false])] User $user,
+        #[MapEntity(mapping: ["confirmationCode" => "confirmationCode", "isVerified" => false])] User $user,
         UserVerifier $verifierService
     ): Response
     {

@@ -54,26 +54,12 @@ class BlogPostRepository extends ServiceEntityRepository
         }
     }
 
-    /**
-     * @return BlogPost[] Returns an array of BlogPost objects
-     */
-    public function findByExampleField($value): array
+    public function searchByQuery(string $query)
     {
-        return $this->createQueryBuilder('bp')
-            ->andWhere('bp.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('bp.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('p')
+            ->where('p.title LIKE :query')
+            ->setParameter('query', '%'. $query. '%')
             ->getQuery()
             ->getResult();
-    }
-
-    public function findOneBySomeField($value): ?BlogPost
-    {
-        return $this->createQueryBuilder('bp')
-            ->andWhere('bp.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult();
     }
 }
