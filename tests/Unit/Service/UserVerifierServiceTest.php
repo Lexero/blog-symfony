@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Service;
 
 use App\Entity\User;
-use App\Service\UserVerifierService;
+use App\Service\UserVerifier;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\MockObject\Exception;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -16,6 +17,9 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class UserVerifierServiceTest extends WebTestCase
 {
+    /**
+     * @throws Exception
+     */
     public function testVerifyUser()
     {
         $entityManager = $this->createMock(EntityManagerInterface::class);
@@ -23,7 +27,7 @@ class UserVerifierServiceTest extends WebTestCase
         $mailer = $this->createMock(MailerInterface::class);
         $router = $this->createMock(RouterInterface::class);
 
-        $userVerifierService = new UserVerifierService($entityManager, $tokenStorage, $mailer, $router);
+        $userVerifierService = new UserVerifier($entityManager, $tokenStorage, $mailer, $router);
         $user = $this->createMock(User::class);
 
         $user->expects($this->once())->method('setVerified')->with(true);
@@ -36,6 +40,9 @@ class UserVerifierServiceTest extends WebTestCase
         $userVerifierService->verifyUser($user);
     }
 
+    /**
+     * @throws Exception
+     */
     public function testSendVerificationEmailToUser()
     {
         $entityManager = $this->createMock(EntityManagerInterface::class);
@@ -43,7 +50,7 @@ class UserVerifierServiceTest extends WebTestCase
         $mailer = $this->createMock(MailerInterface::class);
         $router = $this->createMock(RouterInterface::class);
 
-        $userVerifierService = new UserVerifierService($entityManager, $tokenStorage, $mailer, $router);
+        $userVerifierService = new UserVerifier($entityManager, $tokenStorage, $mailer, $router);
         $user = $this->createMock(User::class);
 
         $user->method('getEmail')->willReturn('test@example.com');

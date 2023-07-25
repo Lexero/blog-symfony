@@ -14,7 +14,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-class UserVerifierService
+class UserVerifier
 {
     private EntityManagerInterface $entityManager;
 
@@ -56,7 +56,7 @@ class UserVerifierService
         $email->subject(RegistrationEmailEnum::EMAIL_TEXT);
         $email->context([
             'signedUrl' => $this->router->generate(
-                "app_verify_email",
+                "verify_email",
                 ["confirmationCode" => $user->getConfirmationCode()],
                 UrlGeneratorInterface::ABSOLUTE_URL
             ),

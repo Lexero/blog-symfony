@@ -328,7 +328,7 @@
         },
         "files": [
             "config/packages/twig.yaml",
-            "templates/base/base.html.twig"
+            "templates/base/layout.html.twig"
         ]
     },
     "symfony/validator": {

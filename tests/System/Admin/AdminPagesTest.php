@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\System\Admin;
 
 use App\Tests\System\WebTestCase;
+use Exception;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminPagesTest extends WebTestCase
@@ -23,6 +24,7 @@ class AdminPagesTest extends WebTestCase
 
     /**
      * @test
+     * @throws Exception
      */
     public function testAllPagesResponseCode()
     {

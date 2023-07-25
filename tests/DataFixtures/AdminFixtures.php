@@ -10,12 +10,12 @@ use Doctrine\Persistence\ObjectManager;
 
 class AdminFixtures extends Fixture
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->loadAdmin($manager);
     }
 
-    public function loadAdmin(ObjectManager $manager)
+    public function loadAdmin(ObjectManager $manager): void
     {
         $admin = new User();
         $admin->setEmail("admin@your.com");

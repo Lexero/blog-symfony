@@ -1,12 +1,12 @@
-{% extends 'base/base.html.twig' %}
+{% extends 'login/layout.html.twig' %}
 {% block body %}
     <title>{% block title %}Log in{% endblock %}</title>
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 70px;">
         <a class="navbar-brand" href="#">Mega Blog</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a class="nav-link" href="{{ path('app_login') }}">Login</a></li>
-            <li><a class="nav-link" href="{{ path('app_register') }}">Register</a></li>
+            <li><a class="nav-link" href="{{ path('login') }}">Login</a></li>
+            <li><a class="nav-link" href="{{ path('registration') }}">Registration</a></li>
         </ul>
     </nav>
     <div class="container">

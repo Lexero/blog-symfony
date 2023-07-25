@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Service;
 
 use App\Service\Locker;
+use PHPUnit\Framework\MockObject\Exception;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Redis;
 
 class LockerTest extends WebTestCase
 {
+    /**
+     * @throws Exception
+     */
     public function testGetLockedBy()
     {
         $redis = $this->createMock(Redis::class);
@@ -23,6 +27,9 @@ class LockerTest extends WebTestCase
         $this->assertSame($userId, $locker->getLockedBy($key));
     }
 
+    /**
+     * @throws Exception
+     */
     public function testSetLock()
     {
         $redis = $this->createMock(Redis::class);
@@ -37,6 +44,9 @@ class LockerTest extends WebTestCase
         $locker->setLock($key, $userId, $ttl);
     }
 
+    /**
+     * @throws Exception
+     */
     public function testRefreshLock()
     {
         $redis = $this->createMock(Redis::class);
@@ -52,6 +62,9 @@ class LockerTest extends WebTestCase
         $locker->refreshLock($key, $userId, $ttl);
     }
 
+    /**
+     * @throws Exception
+     */
     public function testRefreshLockWhenUserNotMatch()
     {
         $redis = $this->createMock(Redis::class);

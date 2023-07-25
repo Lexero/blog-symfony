@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class AdminLoginController extends AbstractController
+class LoginController extends AbstractController
 {
     #[Route(path: '/login', name: 'login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
@@ -19,7 +19,7 @@ class AdminLoginController extends AbstractController
 
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('admin/admin-login.html.twig', [
+        return $this->render('admin/login.html.twig', [
             'last_username' => $lastUsername,
             'error'         => $error,
         ]);

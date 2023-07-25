@@ -21,7 +21,7 @@ final class Version20221229152735 extends AbstractMigration
     {
         $this->addSql('ALTER TABLE blog_post ADD author_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE blog_post ADD updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL');
-        $this->addSql('ALTER TABLE blog_post ADD CONSTRAINT FK_BA5AE01DF675F31B FOREIGN KEY (author_id) REFERENCES users_table (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE blog_post ADD CONSTRAINT FK_BA5AE01DF675F31B FOREIGN KEY (author_id) REFERENCES users (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('CREATE INDEX IDX_BA5AE01DF675F31B ON blog_post (author_id)');
     }
 

@@ -30,6 +30,6 @@ class LoginController extends AbstractController
     {
         $tokenStorage->setToken();
 
-        return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute('login');
     }
 }

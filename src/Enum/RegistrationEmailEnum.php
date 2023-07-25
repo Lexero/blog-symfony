@@ -6,7 +6,7 @@ namespace App\Enum;
 
 class RegistrationEmailEnum
 {
-    public const SENDER_ADDRESS = 'mailer@your.com';
+    public const SENDER_ADDRESS = 'blog@your.com';
     public const SENDER_NAME    = 'Blog Admin';
     public const EMAIL_TEXT     = 'Hello! Please confirm your email';
 

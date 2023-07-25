@@ -25,12 +25,12 @@ class AdminCRUDController extends CRUDController implements ServiceSubscriberInt
         $authorizedUser = $this->getUser();
         if ($authorizedUser instanceof User) {
             $key = $request->getRequestUri();
-            $userId = $this->locker->getLockedBy($key);
-            if ($userId !== null) {
-                if ($authorizedUser->getId() === $userId) {
-                    $this->locker->refreshLock($key, $userId);
+            $email = $this->locker->getLockedBy($key);
+            if ($email !== null) {
+                if ($authorizedUser->getEmail() === $email) {
+                    $this->locker->refreshLock($key, $email);
                 } else {
-                    $this->addFlash('error', sprintf("User with ID %d working with that post", $userId));
+                    $this->addFlash('error', sprintf("User with email %d working with that post", $email));
                     return $this->listAction($request);
                 }
             } else {

@@ -6,6 +6,8 @@ namespace App\Tests\System;
 
 use App\Repository\UserRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Exception;
+use LogicException;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as SymfonyTestCase;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
@@ -27,9 +29,9 @@ class WebTestCase extends SymfonyTestCase
             $client = self::$kernel->getContainer()->get('test.client');
         } catch (ServiceNotFoundException) {
             if (class_exists(KernelBrowser::class)) {
-                throw new \LogicException('You cannot create the client used in functional tests if the "framework.test" config is not set to true.');
+                throw new LogicException('You cannot create the client used in functional tests if the "framework.test" config is not set to true.');
             }
-            throw new \LogicException('You cannot create the client used in functional tests if the BrowserKit component is not available. Try running "composer require symfony/browser-kit".');
+            throw new LogicException('You cannot create the client used in functional tests if the BrowserKit component is not available. Try running "composer require symfony/browser-kit".');
         }
 
         $client->setServerParameters($server);
@@ -37,6 +39,9 @@ class WebTestCase extends SymfonyTestCase
         return $client;
     }
 
+    /**
+     * @throws Exception
+     */
     protected function createAuthenticatedAdminClient(string $email): KernelBrowser
     {
         $user = $this->getRepository()->findOneBy(['email' => $email]);
@@ -48,13 +53,13 @@ class WebTestCase extends SymfonyTestCase
         return $this->createClient()->loginUser($user, self::ADMIN_FIREWALL);
     }
 
+    /**
+     * @throws Exception
+     */
     private function getRepository(): ServiceEntityRepository
     {
         self::bootKernel();
 
-        /** @var ServiceEntityRepository $entityRepository */
-        $entityRepository = static::getContainer()->get(UserRepository::class);
-
-        return $entityRepository;
+        return static::getContainer()->get(UserRepository::class);
     }
 }

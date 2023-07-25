@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
-use App\Enum\UserRoleTypeEnum;
+use App\Enum\UserRoleEnum;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -45,7 +45,7 @@ class UserAdmin extends AbstractAdmin
                 ],
             ])
             ->add('roles', ChoiceType::class, [
-                'choices'  => UserRoleTypeEnum::getValues(),
+                'choices'  => UserRoleEnum::getValues(),
                 'multiple' => true,
             ]);
     }

@@ -1,12 +1,12 @@
-{% extends 'base/base.html.twig' %}
+{% extends 'login/login.html.twig' %}
 {% block body %}
-    <title>{% block title %}Register{% endblock %}</title>
+    <title>{% block title %}Registration{% endblock %}</title>
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 70px;">
         <a class="navbar-brand" href="#">Mega Blog</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a class="nav-link" href="{{ path('app_login') }}">Login</a></li>
-            <li><a class="nav-link" href="{{ path('app_register') }}">Register</a></li>
+            <li><a class="nav-link" href="{{ path('login') }}">Login</a></li>
+            <li><a class="nav-link" href="{{ path('registration') }}">Registration</a></li>
         </ul>
     </nav>
     <div class="container">
@@ -46,7 +46,7 @@
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4" style="margin-top:5px;">
                                 <button id="submit_btn" type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-user"></i> Register
+                                    <i class="fa fa-btn fa-user"></i> Registration
                                 </button>
                             </div>
                         </div>

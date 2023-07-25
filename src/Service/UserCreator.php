@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Enum\UserRoleTypeEnum;
+use App\Enum\UserRoleEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class UserCreatorService
+class UserCreator
 {
     private UserPasswordHasherInterface $userPasswordHasher;
 
@@ -23,7 +23,7 @@ class UserCreatorService
         $this->entityManager = $entityManager;
     }
 
-    public function registerUser($user, $form): void
+    public function registrationUser($user, $form): void
     {
         $user->setPassword(
             $this->userPasswordHasher->hashPassword(
@@ -32,7 +32,7 @@ class UserCreatorService
             )
         );
 
-        $user->setRoles([UserRoleTypeEnum::ROLE_READER]);
+        $user->setRoles([UserRoleEnum::ROLE_READER]);
         $user->setConfirmationCode(Uuid::uuid6()->toString());
         $this->entityManager->persist($user);
         $this->entityManager->flush();

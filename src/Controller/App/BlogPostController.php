@@ -18,7 +18,7 @@ class BlogPostController extends AbstractController
     {
         $posts = $postRepository->getLatestPosts(15);
 
-        return $this->render('blog/mainpage.html.twig', [
+        return $this->render('blog/main.html.twig', [
             'posts' => $posts,
             'controller_name' => 'BlogPostController',
         ]);

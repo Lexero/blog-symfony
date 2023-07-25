@@ -10,7 +10,7 @@ use PHPUnit\Framework\MockObject\Exception;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Form\Test\FormInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use App\Service\UserCreatorService;
+use App\Service\UserCreator;
 
 class UserCreatorServiceTest extends WebTestCase
 {
@@ -39,7 +39,7 @@ class UserCreatorServiceTest extends WebTestCase
         $user->expects($this->once())->method('setRoles')->with(['ROLE_READER']);
         $user->expects($this->once())->method('setConfirmationCode')->with($this->isType('string'));
 
-        $userCreatorService = new UserCreatorService($passwordHasher, $entityManager);
-        $userCreatorService->registerUser($user, $form);
+        $userCreatorService = new UserCreator($passwordHasher, $entityManager);
+        $userCreatorService->registrationUser($user, $form);
     }
 }
