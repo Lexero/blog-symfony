@@ -32,7 +32,7 @@ security:
                 provider: user
                 login_path: login
                 check_path: login
-                default_target_path: /posts
+                default_target_path: main
             logout:
                 path: logout
                 target: login
