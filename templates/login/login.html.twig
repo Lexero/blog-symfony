@@ -29,20 +29,23 @@
                                 <div class="form-group">
                                     <label for="email" class="col-md-4 control-label">Email</label>
                                     <div class="col-md-12">
-                                        <input id="inputEmail" type="email" class="form-control" name="_username" value="{{ last_username }}" placeholder="Email" autofocus/>
+                                        <input id="inputEmail" type="email" class="form-control" name="_username"
+                                               value="{{ last_username }}" placeholder="Email" autofocus/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="password" class="col-md-4 control-label">Password</label>
                                     <div class="col-md-12">
-                                        <input id="inputPassword" type="password" class="form-control" name="_password" placeholder="Password"/>
+                                        <input id="inputPassword" type="password" class="form-control" name="_password"
+                                               placeholder="Password"/>
                                     </div>
                                 </div>
                                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <button type="submit" class="btn btn-primary">
-                                            <i class="fa fa-btn fa-sign-in"></i>Login</button>
+                                            <i class="fa fa-btn fa-sign-in"></i>Login
+                                        </button>
                                     </div>
                                 </div>
                             </form>

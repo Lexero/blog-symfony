@@ -5,12 +5,14 @@
 {% block body %}
     <article class="post">
         <header>
-            <div class="date"><time datetime="{{ post.createdAt|date('c') }}">{{ post.createdAt|date('l, F j, Y') }}</time></div>
+            <div class="date">
+                <time datetime="{{ post.createdAt|date('c') }}">{{ post.createdAt|date('l, F j, Y') }}</time>
+            </div>
             <h2>{{ post.title }}</h2>
         </header>
         <div>
             <p>{{ post.body }}</p>
         </div>
-        <p>Posted by <span class="highlight">{{post.author.name}}</span> at {{ post.createdAt|date('h:iA') }}</p>
+        <p>Posted by <span class="highlight">{{ post.author.name }}</span> at {{ post.createdAt|date('h:iA') }}</p>
     </article>
 {% endblock %}

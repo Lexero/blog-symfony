@@ -17,8 +17,6 @@ body { line-height: 1;font-family: Arial, Helvetica, sans-serif;font-size: 12px;
 #header h3 { text-align: center; font-family: 'La Belle Aurore', cursive; font-size: 24px; margin-bottom: 20px; font-weight: normal; }
 
 .main-col { width: 1000px; display: inline-block; float: left; padding: 20px; margin-bottom: 20px; }
-/*.main-col { width: 700px; display: inline-block; float: left; border-right: 1px solid #ccc; padding: 20px; margin-bottom: 20px; }*/
-/*.sidebar { width: 239px; padding: 10px; display: inline-block; }*/
 
 .main-col a { color: #3F51B5; }
 .main-col h1,

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html"; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html" ; charset=utf-8"/>
     <title>{% block title %}Mega Blog{% endblock %}</title>
     {% block stylesheets %}
         <link href='http://fonts.googleapis.com/css?family=Irish+Grover' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=La+Belle+Aurore' rel='stylesheet' type='text/css'>
-        <link href="{{ asset('app/css/blog.css') }}" type="text/css" rel="stylesheet" />
+        <link href="{{ asset('app/css/blog.css') }}" type="text/css" rel="stylesheet"/>
     {% endblock %}
-    <link rel="shortcut icon" href="{{ asset('f.ico') }}" />
+    <link rel="shortcut icon" href="{{ asset('f.ico') }}"/>
 </head>
 <body>
 
@@ -17,6 +17,10 @@
         <div class="top">
             {% block navigation %}
                 <nav>
+                    <form action="{{ path('post_search') }}" method="get">
+                        <input type="search" aria-label="Search" name="q">
+                        <button type="submit">Search</button>
+                    </form>
                     <ul class="navigation">
                         <li><a class="nav-link" href="{{ path('main') }}">View List</a></li>
                         <li><a class="nav-link" href="{{ path('logout') }}">Logout</a></li>
@@ -35,28 +39,24 @@
         {% block body %}
             {% for post in posts %}
                 <article class="post">
-                    <div class="date"><time datetime="{{ post.createdAt|date('c') }}">{{ post.createdAt|date('l, F j, Y') }}</time></div>
-                <a href="{{ path('post_view', {'slug': post.slug}) }}"> <p> {{ post.title }} <p> </a>
-                <div class="snippet">
-                    <p>{{ post.body(500) }}</p>
-                    <p class="continue"><a href="{{ path('post_view', {'slug': post.slug}) }}">Continue reading...</a></p>
-                </div>
-                <p>Posted by <span class="highlight">{{post.author.name}}</span> at {{ post.createdAt|date('h:iA') }}</p>
-                <br>
+                    <div class="date">
+                        <time datetime="{{ post.createdAt|date('c') }}">{{ post.createdAt|date('l, F j, Y') }}</time>
+                    </div>
+                    <a href="{{ path('post_view', {'slug': post.slug}) }}"><p> {{ post.title }}</p></a>
+                    <div class="snippet">
+                        <p>{{ post.body(500) }}</p>
+                        <p class="continue"><a href="{{ path('post_view', {'slug': post.slug}) }}">Continue
+                                reading...</a></p>
+                    </div>
+                    <p>Posted by <span class="highlight">{{ post.author.name }}</span>
+                        at {{ post.createdAt|date('h:iA') }}</p>
+                    <br>
                 </article>
             {% else %}
                 <p>There are no blog posts here yet</p>
             {% endfor %}
         {% endblock %}
     </section>
-{#    <aside class="sidebar">#}
-{#        {% block sidebar %}#}
-{#            {% for post in posts %}#}
-{#                <p>{{ post.body }} </p>#}
-{#            {% endfor %}#}
-{#        {% endblock %}#}
-{#    </aside>#}
-
     <div id="footer">
         {% block footer %}
             Symfony6 blog
