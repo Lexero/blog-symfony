@@ -37,11 +37,10 @@ class LockerTest extends WebTestCase
 
         $key = 'key2';
         $userId = 456;
-        $ttl = 300;
 
-        $redis->expects($this->once())->method('set')->with($key, $userId, $ttl);
+        $redis->expects($this->once())->method('set')->with($key, $userId);
 
-        $locker->setLock($key, $userId, $ttl);
+        $locker->setLock($key, $userId);
     }
 
     /**
@@ -54,12 +53,11 @@ class LockerTest extends WebTestCase
 
         $key = 'key3';
         $userId = 789;
-        $ttl = 300;
 
         $redis->method('get')->with($key)->willReturn((string)$userId);
-        $redis->expects($this->once())->method('expire')->with($key, $ttl);
+        $redis->expects($this->once())->method('expire')->with($key);
 
-        $locker->refreshLock($key, $userId, $ttl);
+        $locker->refreshLock($key, $userId);
     }
 
     /**
@@ -73,11 +71,10 @@ class LockerTest extends WebTestCase
         $key = 'key4';
         $userId = 111;
         $anotherUserId = 222;
-        $ttl = 300;
 
         $redis->method('get')->with($key)->willReturn((string)$userId);
         $redis->expects($this->never())->method('expire');
 
-        $locker->refreshLock($key, $anotherUserId, $ttl);
+        $locker->refreshLock($key, $anotherUserId);
     }
 }

@@ -54,7 +54,7 @@ class BlogPostRepository extends ServiceEntityRepository
         }
     }
 
-    public function searchByQuery(string $query)
+    public function searchByTitle(string $query)
     {
         return $this->createQueryBuilder('p')
             ->where('p.title LIKE :query')
