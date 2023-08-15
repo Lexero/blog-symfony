@@ -11,6 +11,8 @@ services:
       - trash:/var/www/
     expose:
       - "9000"
+    environment:
+      - PHP_IDE_CONFIG=serverName=server
 
   php-messenger:
     build:

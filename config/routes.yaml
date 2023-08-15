@@ -5,7 +5,6 @@ controllers:
 admin_controllers:
     resource: ../src/Controller/Admin/
     type: annotation
-    prefix: /admin
     name_prefix: 'admin_'
 
 app_controllers:
