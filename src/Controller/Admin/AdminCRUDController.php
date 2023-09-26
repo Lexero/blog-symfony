@@ -30,7 +30,7 @@ class AdminCRUDController extends CRUDController implements ServiceSubscriberInt
                 if ($authorizedUser->getEmail() === $email) {
                     $this->locker->refreshLock($key, $email);
                 } else {
-                    $this->addFlash('error', sprintf("User with email %d working with that post", $email));
+                    $this->addFlash('error', sprintf("User with email %d working with that entity", $email));
                     return $this->listAction($request);
                 }
             } else {

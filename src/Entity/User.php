@@ -28,7 +28,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $name = null;
 
     #[ORM\Column]
-    private array $roles = [UserRoleEnum::ROLE_READER];
+    private array $roles = [UserRoleEnum::ROLE_READER->value];
 
     #[ORM\Column]
     private ?string $confirmationCode = null;
