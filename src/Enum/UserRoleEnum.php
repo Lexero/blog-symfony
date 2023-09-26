@@ -11,6 +11,15 @@ enum UserRoleEnum: string
     case ROLE_READER = 'ROLE_READER';
     case ROLE_WRITER = 'ROLE_WRITER';
 
+    public static function getValues(): array
+    {
+        $roles = [];
+        foreach (UserRoleEnum::cases() as $role) {
+            $roles[$role->value] = $role->value;
+        }
+        return $roles;
+    }
+
     public static function isValid(UserRoleEnum $role): bool
     {
         return in_array($role, self::cases());

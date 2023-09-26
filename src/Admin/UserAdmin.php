@@ -45,7 +45,7 @@ class UserAdmin extends AbstractAdmin
                 ],
             ])
             ->add('roles', ChoiceType::class, [
-                'choices'  => UserRoleEnum::cases(),
+                'choices'  => UserRoleEnum::getValues(),
                 'multiple' => true,
             ]);
     }
