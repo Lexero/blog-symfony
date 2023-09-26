@@ -51,10 +51,10 @@ class UserVerifier
     public function sendVerificationEmailToUser($user): void
     {
         $email = new TemplatedEmail();
-        $email->from(new Address(RegistrationEmailEnum::SENDER_ADDRESS, RegistrationEmailEnum::SENDER_NAME));
+        $email->from(new Address(RegistrationEmailEnum::SENDER_ADDRESS->value, RegistrationEmailEnum::SENDER_NAME->value));
         $email->to($user->getEmail());
         $email->htmlTemplate('login/confirmation_email.html.twig');
-        $email->subject(RegistrationEmailEnum::EMAIL_TEXT);
+        $email->subject(RegistrationEmailEnum::EMAIL_TEXT->value);
         $email->context([
             'signedUrl' => $this->router->generate(
                 "verify_email",

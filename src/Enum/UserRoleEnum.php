@@ -4,25 +4,24 @@ declare(strict_types=1);
 
 namespace App\Enum;
 
-class UserRoleEnum
+enum UserRoleEnum: string
 {
-    public const ROLE_USER   = 'ROLE_USER';
-    public const ROLE_ADMIN  = 'ROLE_ADMIN';
-    public const ROLE_READER = 'ROLE_READER';
-    public const ROLE_WRITER = 'ROLE_WRITER';
+    case ROLE_USER = 'ROLE_USER';
+    case ROLE_ADMIN = 'ROLE_ADMIN';
+    case ROLE_READER = 'ROLE_READER';
+    case ROLE_WRITER = 'ROLE_WRITER';
 
     public static function getValues(): array
     {
-        return [
-            self::ROLE_USER   => self::ROLE_USER,
-            self::ROLE_ADMIN  => self::ROLE_ADMIN,
-            self::ROLE_READER => self::ROLE_READER,
-            self::ROLE_WRITER => self::ROLE_WRITER,
-        ];
+        $roles = [];
+        foreach (UserRoleEnum::cases() as $role) {
+            $roles[$role->value] = $role->value;
+        }
+        return $roles;
     }
 
-    public static function isValid(string $role): bool
+    public static function isValid(UserRoleEnum $role): bool
     {
-        return in_array($role, self::getValues());
+        return in_array($role, self::cases());
     }
 }

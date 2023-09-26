@@ -4,19 +4,9 @@ declare(strict_types=1);
 
 namespace App\Enum;
 
-class RegistrationEmailEnum
+enum RegistrationEmailEnum: string
 {
-    public const SENDER_ADDRESS = 'blog@your.com';
-    public const SENDER_NAME    = 'Blog Admin';
-    public const EMAIL_TEXT     = 'Hello! Please confirm your email';
-
-    public static function getValues(): array
-    {
-        return [
-            self::SENDER_ADDRESS => self::SENDER_ADDRESS,
-            self::SENDER_NAME    => self::SENDER_NAME,
-            self::EMAIL_TEXT     => self::EMAIL_TEXT,
-        ];
-    }
-
+    case SENDER_ADDRESS = 'blog@your.com';
+    case SENDER_NAME = 'Blog Admin';
+    case EMAIL_TEXT = 'Hello! Please confirm your email';
 }

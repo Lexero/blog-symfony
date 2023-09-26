@@ -5,8 +5,8 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
 
     role_hierarchy:
-        !php/const App\Enum\UserRoleEnum::ROLE_WRITER: [!php/const App\Enum\UserRoleEnum::ROLE_READER, !php/const App\Enum\UserRoleEnum::ROLE_ADMIN]
-        !php/const App\Enum\UserRoleEnum::ROLE_READER: [ !php/const App\Enum\UserRoleEnum::ROLE_USER ]
+        !php/enum App\Enum\UserRoleEnum::ROLE_WRITER->value: [ !php/enum App\Enum\UserRoleEnum::ROLE_READER->value, !php/enum App\Enum\UserRoleEnum::ROLE_ADMIN->value ]
+        !php/enum App\Enum\UserRoleEnum::ROLE_READER->value: [ !php/enum App\Enum\UserRoleEnum::ROLE_USER->value ]
     providers:
         user:
             entity:
@@ -46,9 +46,9 @@ security:
         - { path: ^/registration, roles: PUBLIC_ACCESS }
         - { path: ^/verify/email, roles: PUBLIC_ACCESS }
         - { path: ^/admin/login, roles: PUBLIC_ACCESS }
-        - { path: ^/admin, roles: !php/const App\Enum\UserRoleEnum::ROLE_WRITER }
-        - { path: ^/posts, roles: !php/const App\Enum\UserRoleEnum::ROLE_READER }
-        - { path: ^/, roles: !php/const App\Enum\UserRoleEnum::ROLE_READER }
+        - { path: ^/admin, roles: !php/enum App\Enum\UserRoleEnum::ROLE_ADMIN->value }
+        - { path: ^/posts, roles: !php/enum App\Enum\UserRoleEnum::ROLE_READER->value }
+        - { path: ^/, roles: !php/enum App\Enum\UserRoleEnum::ROLE_READER->value }
 
 when@test:
     security:
