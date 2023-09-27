@@ -12,7 +12,7 @@ services:
     expose:
       - "9000"
     environment:
-      - PHP_IDE_CONFIG=serverName=server
+      - PHP_IDE_CONFIG=serverName=Server
 
   php-messenger:
     build:
