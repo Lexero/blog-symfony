@@ -17,21 +17,21 @@
         <div class="top">
             {% block navigation %}
                 <nav>
-                    <form action="{{ path('post_search') }}" method="get">
+                    <form action="{{ path('app_post_search') }}" method="get">
                         <input type="search" aria-label="Search" name="q">
                         <button type="submit">Search</button>
                     </form>
                     <ul class="navigation">
-                        <li><a class="nav-link" href="{{ path('main') }}">View List</a></li>
-                        <li><a class="nav-link" href="{{ path('logout') }}">Logout</a></li>
+                        <li><a class="nav-link" href="{{ path('app_main') }}">View List</a></li>
+                        <li><a class="nav-link" href="{{ path('app_logout') }}">Logout</a></li>
                     </ul>
                 </nav>
             {% endblock %}
         </div>
 
         <hgroup>
-            <h2>{% block blog_title %}<a href="{{ path('main') }}">Mega Blog</a>{% endblock %}</h2>
-            <h3>{% block blog_tagline %}<a href="{{ path('main') }}">creating a blog in Symfony6</a>{% endblock %}</h3>
+            <h2>{% block blog_title %}<a href="{{ path('app_main') }}">Mega Blog</a>{% endblock %}</h2>
+            <h3>{% block blog_tagline %}<a href="{{ path('app_main') }}">creating a blog in Symfony6</a>{% endblock %}</h3>
         </hgroup>
     </header>
 
@@ -42,10 +42,10 @@
                     <div class="date">
                         <time datetime="{{ post.createdAt|date('c') }}">{{ post.createdAt|date('l, F j, Y') }}</time>
                     </div>
-                    <a href="{{ path('post_view', {'slug': post.slug}) }}"><p> {{ post.title }}</p></a>
+                    <a href="{{ path('app_post_view', {'slug': post.slug}) }}"><p> {{ post.title }}</p></a>
                     <div class="snippet">
                         <p>{{ post.body(500) }}</p>
-                        <p class="continue"><a href="{{ path('post_view', {'slug': post.slug}) }}">Continue
+                        <p class="continue"><a href="{{ path('app_post_view', {'slug': post.slug}) }}">Continue
                                 reading...</a></p>
                     </div>
                     <p>Posted by <span class="highlight">{{ post.author.name }}</span>

@@ -5,8 +5,8 @@
         <a class="navbar-brand" href="#">Mega Blog</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a class="nav-link" href="{{ path('login') }}">Login</a></li>
-            <li><a class="nav-link" href="{{ path('registration') }}">Registration</a></li>
+            <li><a class="nav-link" href="{{ path('app_login') }}">Login</a></li>
+            <li><a class="nav-link" href="{{ path('app_registration') }}">Registration</a></li>
         </ul>
     </nav>
     <div class="container">
@@ -46,6 +46,7 @@
                                         <button type="submit" class="btn btn-primary">
                                             <i class="fa fa-btn fa-sign-in"></i>Login
                                         </button>
+                                        <a href="{{ path('google_login') }}" class="btn btn-primary">Login with Google</a>
                                     </div>
                                 </div>
                             </form>

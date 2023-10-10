@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BlogPostController extends AbstractController
 {
-    #[Route(path: '/posts', name: 'main', methods: Request::METHOD_GET)]
+    #[Route(path: '/posts', name: 'app_main', methods: Request::METHOD_GET)]
     public function blog(BlogPostRepository $postRepository): Response
     {
         $posts = $postRepository->getLatestPosts(15);
@@ -25,7 +25,7 @@ class BlogPostController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/posts/search', name: 'post_search', methods: Request::METHOD_GET)]
+    #[Route(path: '/posts/search', name: 'app_post_search', methods: Request::METHOD_GET)]
     public function search(Request $request, BlogPostRepository $blogPostRepository): Response
     {
         $query = $request->query->get('title');
@@ -41,7 +41,7 @@ class BlogPostController extends AbstractController
         );
     }
 
-    #[Route(path: '/posts/{slug}', name: 'post_view', methods: Request::METHOD_GET)]
+    #[Route(path: '/posts/{slug}', name: 'app_post_view', methods: Request::METHOD_GET)]
     public function post(#[MapEntity(mapping: ['slug' => 'slug'])] BlogPost $post): Response
     {
         return $this->render('blog/post.html.twig', [

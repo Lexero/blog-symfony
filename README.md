@@ -1,5 +1,5 @@
 # blog-symfony
-Pet project blog on symphony "^6"
+Pet project blog on symphony, ^6 version
 
 ## Installation
 * [Install docker-compose](https://docs.docker.com/compose/install/)

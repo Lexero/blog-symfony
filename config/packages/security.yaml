@@ -1,8 +1,6 @@
 security:
-    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: bcrypt
-    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
 
     role_hierarchy:
         !php/enum App\Enum\UserRoleEnum::ROLE_WRITER->value: [ !php/enum App\Enum\UserRoleEnum::ROLE_READER->value, !php/enum App\Enum\UserRoleEnum::ROLE_ADMIN->value ]
@@ -46,6 +44,7 @@ security:
         - { path: ^/registration, roles: PUBLIC_ACCESS }
         - { path: ^/verify/email, roles: PUBLIC_ACCESS }
         - { path: ^/admin/login, roles: PUBLIC_ACCESS }
+        - { path: ^/connect, roles: PUBLIC_ACCESS }
         - { path: ^/admin, roles: !php/enum App\Enum\UserRoleEnum::ROLE_ADMIN->value }
         - { path: ^/posts, roles: !php/enum App\Enum\UserRoleEnum::ROLE_READER->value }
         - { path: ^/, roles: !php/enum App\Enum\UserRoleEnum::ROLE_READER->value }
