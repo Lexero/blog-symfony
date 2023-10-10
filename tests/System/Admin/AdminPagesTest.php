@@ -6,6 +6,7 @@ namespace App\Tests\System\Admin;
 
 use App\Tests\System\WebTestCase;
 use Exception;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminPagesTest extends WebTestCase
@@ -45,7 +46,7 @@ class AdminPagesTest extends WebTestCase
 
             $url = $router->generate($routeName);
 
-            $client->request('GET', $url);
+            $client->request(Request::METHOD_GET, $url);
 
             $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode(), $routeName . ' | ' . $url);
         }

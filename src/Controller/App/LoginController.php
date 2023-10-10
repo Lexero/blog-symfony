@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\App;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -12,7 +13,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
-    #[Route(path: '/login', name: 'login', methods: ['GET', 'POST'])]
+    #[Route(path: '/login', name: 'login', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -25,7 +26,7 @@ class LoginController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/logout', name: 'logout', methods: ['GET', 'POST'])]
+    #[Route(path: '/logout', name: 'logout', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function logout(TokenStorage $tokenStorage): Response
     {
         $tokenStorage->setToken();

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\System\App;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Request;
 
 class RegistrationControllerTest extends WebTestCase
 {
@@ -12,7 +13,7 @@ class RegistrationControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/registration');
+        $client->request(Request::METHOD_GET, '/registration');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
@@ -31,7 +32,7 @@ class RegistrationControllerTest extends WebTestCase
     public function testVerifyUserEmail()
     {
         $client = static::createClient();
-        $client->request('GET', '/verify/email/12345');
+        $client->request(Request::METHOD_GET, '/verify/email/12345');
 
         $this->assertResponseRedirects('/posts');
     }

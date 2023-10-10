@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RegistrationController extends AbstractController
 {
-    #[Route(path: '/registration', name: 'registration', methods: ['GET', 'POST'])]
+    #[Route(path: '/registration', name: 'registration', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function registration(
         Request                  $request,
         UserCreator              $creatorService,
@@ -45,7 +45,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/verify/email/{confirmationCode}', name: 'verify_email', methods: ['GET', 'POST'])]
+    #[Route(path: '/verify/email/{confirmationCode}', name: 'verify_email', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function verifyUserEmail(
         #[MapEntity(mapping: ["confirmationCode" => "confirmationCode", "isVerified" => false])]
         User         $user,
