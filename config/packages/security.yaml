@@ -5,11 +5,17 @@ security:
     role_hierarchy:
         !php/enum App\Enum\UserRoleEnum::ROLE_WRITER->value: [ !php/enum App\Enum\UserRoleEnum::ROLE_READER->value, !php/enum App\Enum\UserRoleEnum::ROLE_ADMIN->value ]
         !php/enum App\Enum\UserRoleEnum::ROLE_READER->value: [ !php/enum App\Enum\UserRoleEnum::ROLE_USER->value ]
+
+    enable_authenticator_manager: true
+
     providers:
         user:
             entity:
                 class: App\Entity\User
                 property: email
+        hwi:
+            id: App\Security\OAuthUserProvider
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -26,16 +32,27 @@ security:
                 target: admin_login
         main:
             lazy: false
+            entry_point: form_login
             form_login:
                 provider: user
-                login_path: login
-                check_path: login
-                default_target_path: main
+                login_path: app_login
+                check_path: app_login
+                default_target_path: app_main
             logout:
-                path: logout
-                target: login
+                path: app_logout
+                target: app_login
             user_checker: App\Security\VerificationUserChecker
-#            custom_authenticator: App\Security\UserAuthenticator
+            oauth:
+                login_path: hwi_oauth_connect
+                failure_path: hwi_oauth_connect
+                check_path: hwi_oauth_connect
+                default_target_path: app_main
+                use_forward: false
+                resource_owners:
+                    google: google_oauth_check
+                oauth_user_provider:
+                    service: App\Security\OAuthUserProvider
+                provider: hwi
 
     # Note: Only the *first* access control that matches will be used
     access_control:
@@ -44,7 +61,7 @@ security:
         - { path: ^/registration, roles: PUBLIC_ACCESS }
         - { path: ^/verify/email, roles: PUBLIC_ACCESS }
         - { path: ^/admin/login, roles: PUBLIC_ACCESS }
-        - { path: ^/connect, roles: PUBLIC_ACCESS }
+        - { path: ^/oauth, roles: PUBLIC_ACCESS }
         - { path: ^/admin, roles: !php/enum App\Enum\UserRoleEnum::ROLE_ADMIN->value }
         - { path: ^/posts, roles: !php/enum App\Enum\UserRoleEnum::ROLE_READER->value }
         - { path: ^/, roles: !php/enum App\Enum\UserRoleEnum::ROLE_READER->value }
