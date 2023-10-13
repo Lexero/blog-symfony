@@ -30,10 +30,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [UserRoleEnum::ROLE_READER->value];
 
-    #[ORM\Column]
+    #[ORM\Column (nullable: true)]
     private ?string $confirmationCode = null;
 
-    #[ORM\Column]
+    #[ORM\Column (nullable: true)]
     private ?string $password = null;
 
     #[ORM\Column(type: 'boolean')]
@@ -77,14 +77,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRoles(array $roles): void
     {
         foreach ($roles as $role) {
-            if (!UserRoleEnum::isValid($role)) {
+            if (!UserRoleEnum::isValid(UserRoleEnum::from($role))) {
                 throw new \RuntimeException('Invalid role: ' . $role);
             }
         }
         $this->roles = $roles;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -94,9 +94,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->password = $password;
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
-//         $this->password = null;
+        $this->password = null;
     }
 
     public function isVerified(): bool
@@ -109,7 +109,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->isVerified = $isVerified;
     }
 
-    public function getConfirmationCode(): string
+    public function getConfirmationCode(): ?string
     {
         return $this->confirmationCode;
     }

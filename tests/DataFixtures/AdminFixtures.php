@@ -21,7 +21,6 @@ class AdminFixtures extends Fixture
         $admin->setEmail('admin@your.com');
         $admin->setName('Alex');
         $admin->setRoles(['ROLE_WRITER']);
-        $admin->setConfirmationCode('12345');
         $admin->setPassword('$2y$13$8KGfu/2v7n84rnCPijENKOpvpRaeKQXOnZeDYlMLXbt1rFuV1rm8S');
         $admin->setVerified(true);
 
