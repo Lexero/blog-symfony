@@ -28,7 +28,7 @@ class BlogPostController extends AbstractController
     #[Route(path: '/posts/search', name: 'post_search', methods: Request::METHOD_GET)]
     public function search(Request $request, BlogPostRepository $blogPostRepository): Response
     {
-        $query = $request->query->get('title');
+        $query = $request->query->get('q');
         if ($query) {
             $posts = $blogPostRepository->searchByTitle($query);
         } else {
