@@ -33,6 +33,10 @@ security:
         main:
             lazy: false
             entry_point: form_login
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 86400
+                always_remember_me: true
             form_login:
                 provider: user
                 login_path: app_login
@@ -49,7 +53,8 @@ security:
                 default_target_path: app_main
                 use_forward: false
                 resource_owners:
-                    google: google_oauth_check
+                    google: google_oauth_login
+                    github: github_oauth_login
                 oauth_user_provider:
                     service: App\Security\OAuthUserProvider
                 provider: hwi

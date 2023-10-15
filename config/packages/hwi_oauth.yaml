@@ -7,3 +7,8 @@ hwi_oauth:
       client_secret: '%env(OAUTH_GOOGLE_CLIENT_SECRET)%'
       scope: 'email profile'
 
+    github:
+      type: github
+      client_id: '%env(OAUTH_GITHUB_CLIENT_ID)%'
+      client_secret: '%env(OAUTH_GITHUB_CLIENT_SECRET)%'
+      scope: 'user:email,public_repo'
