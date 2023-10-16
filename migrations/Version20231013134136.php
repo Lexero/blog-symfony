@@ -24,7 +24,6 @@ final class Version20231013134136 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE users ALTER confirmation_code SET NOT NULL');
         $this->addSql('ALTER TABLE users ALTER password SET NOT NULL');
         $this->addSql('ALTER INDEX uniq_1483a5e9e7927c74 RENAME TO uniq_8d93d649e7927c74');

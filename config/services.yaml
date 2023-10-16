@@ -32,3 +32,7 @@ services:
               arguments: [ '%env(REDIS_HOST)%', '%env(REDIS_PORT)%' ]
             - method: select
               arguments: [ '%env(REDIS_DATABASE)%' ]
+
+    App\EventSubscriber\MigrationEventSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

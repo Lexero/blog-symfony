@@ -34,6 +34,8 @@ class OAuthUserProvider implements UserProviderInterface, OAuthAwareUserProvider
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
+        } elseif ($user->isVerified() !== true) {
+            $user->setVerified(true);
         }
 
         return $user;
