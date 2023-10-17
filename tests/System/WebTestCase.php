@@ -46,7 +46,7 @@ class WebTestCase extends SymfonyTestCase
     {
         $user = $this->getRepository()->findOneBy(['email' => $email]);
 
-        if (!$user) {
+        if ($user === null) {
             throw new NotFoundHttpException(sprintf('Not found user with email "%s".', $email));
         }
 

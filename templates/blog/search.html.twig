@@ -6,10 +6,10 @@
     <h1>Search result:</h1>
     {% for post in posts %}
         <article class="post">
-            <a href="{{ path('post_view', {'slug': post.slug}) }}"><p> {{ post.title }}</p></a>
+            <a href="{{ path('app_post_view', {'slug': post.slug}) }}"><p> {{ post.title }}</p></a>
             <div class="snippet">
                 <p>{{ post.body | slice(0, 255) ~ '...' }}</p>
-                <p class="continue"><a href="{{ path('post_view', {'slug': post.slug}) }}">Continue reading...</a></p>
+                <p class="continue"><a href="{{ path('app_post_view', {'slug': post.slug}) }}">Continue reading...</a></p>
             </div>
             <p>Posted by <span class="highlight">{{ post.author.name }}</span> at {{ post.createdAt|date('h:iA') }}</p>
             <br>

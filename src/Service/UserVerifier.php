@@ -57,7 +57,7 @@ class UserVerifier
         $email->subject(RegistrationEmailEnum::EMAIL_TEXT->value);
         $email->context([
             'signedUrl' => $this->router->generate(
-                "verify_email",
+                "app_verify_email",
                 ["confirmationCode" => $user->getConfirmationCode()],
                 UrlGeneratorInterface::ABSOLUTE_URL
             ),

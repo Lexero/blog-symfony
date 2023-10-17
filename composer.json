@@ -16,7 +16,11 @@
         "doctrine/orm": "^2.13",
         "fakerphp/faker": "^1.21",
         "friendsofsymfony/rest-bundle": "^3.4",
+        "http-interop/http-factory-guzzle": "^1.2",
+        "hwi/oauth-bundle": "^2.0",
         "lexik/jwt-authentication-bundle": "^2.16",
+        "php-http/guzzle6-adapter": "^2.0",
+        "php-http/httplug-bundle": "^1.30",
         "ramsey/uuid-doctrine": "^1.8",
         "sonata-project/admin-bundle": "^4.21",
         "sonata-project/doctrine-orm-admin-bundle": "^4.8",
@@ -55,7 +59,8 @@
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
             "symfony/flex": true,
-            "symfony/runtime": true
+            "symfony/runtime": true,
+            "php-http/discovery": true
         },
         "optimize-autoloader": true,
         "preferred-install": {

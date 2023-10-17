@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RegistrationController extends AbstractController
 {
-    #[Route(path: '/registration', name: 'registration', methods: [Request::METHOD_GET, Request::METHOD_POST])]
+    #[Route(path: '/registration', name: 'app_registration', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function registration(
         Request                  $request,
         UserCreator              $creatorService,
@@ -37,7 +37,7 @@ class RegistrationController extends AbstractController
 
             $this->addFlash('success-sent', 'Please, confirm your email!');
 
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('login/registration.html.twig', [
@@ -45,7 +45,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/verify/email/{confirmationCode}', name: 'verify_email', methods: [Request::METHOD_GET, Request::METHOD_POST])]
+    #[Route(path: '/verify/email/{confirmationCode}', name: 'app_verify_email', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function verifyUserEmail(
         #[MapEntity(mapping: ["confirmationCode" => "confirmationCode", "isVerified" => false])]
         User         $user,
@@ -54,6 +54,6 @@ class RegistrationController extends AbstractController
     {
         $verifierService->verifyUser($user);
 
-        return $this->redirectToRoute('main');
+        return $this->redirectToRoute('app_main');
     }
 }
