@@ -26,7 +26,7 @@ class OAuthUserProvider implements UserProviderInterface, OAuthAwareUserProvider
         $email = $response->getEmail();
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
 
-        if (!$user) {
+        if ($user === null) {
             $user = new User();
             $user->setEmail($email);
             $user->setName($response->getNickname() ?? $email);
@@ -34,7 +34,7 @@ class OAuthUserProvider implements UserProviderInterface, OAuthAwareUserProvider
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
-        } elseif ($user->isVerified() !== true) {
+        } elseif ($user->isVerified() === false) {
             $user->setVerified(true);
         }
 
@@ -45,7 +45,7 @@ class OAuthUserProvider implements UserProviderInterface, OAuthAwareUserProvider
     {
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $identifier]);
 
-        if (!$user) {
+        if ($user === null) {
             throw new UserNotFoundException(sprintf('User with email "%s" not found.', $identifier));
         }
 
