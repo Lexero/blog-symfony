@@ -24,7 +24,6 @@ final class Version20221229152735 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE posts DROP CONSTRAINT FK_BA5AE01DF675F31B');
         $this->addSql('ALTER TABLE posts DROP author_id, updated_at');
         $this->addSql('DROP INDEX IDX_BA5AE01DF675F31B');
