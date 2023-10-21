@@ -13,25 +13,30 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-#[AsCommand(name: 'app:create-user')]
+#[AsCommand(name: 'app:create-user',
+    description: 'Creates new user and stores in the database'
+)]
 class CreateUserCommand extends Command
 {
     protected static $defaultDescription = 'Creates a new user.';
 
-    private EntityManagerInterface $entityManager;
-    private UserPasswordHasherInterface $passwordHasher;
-
-    public function __construct(EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly UserPasswordHasherInterface $passwordHasher)
     {
         parent::__construct();
-
-        $this->entityManager = $entityManager;
-        $this->passwordHasher = $passwordHasher;
     }
 
     protected function configure(): void
     {
-        $this->setHelp('This command allows you to create a user...');
+        $this->setHelp(<<<'HELP'
+            The <info>%command.name%</info> command creates new user and saves it in the database:
+
+              <info>php %command.full_name%</info> 
+              <info>Email: </info>
+              <info>Password: </info>
+              <info>Name: </info>
+            HELP);
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
