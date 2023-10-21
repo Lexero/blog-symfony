@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Service;
 
 use App\Entity\User;
+use App\Enum\UserRoleEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\Exception;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -36,7 +37,7 @@ class UserCreatorServiceTest extends WebTestCase
         $entityManager->expects($this->once())->method('flush');
 
         $user->expects($this->once())->method('setPassword')->with($hashedPassword);
-        $user->expects($this->once())->method('setRoles')->with(['ROLE_READER']);
+        $user->expects($this->once())->method('setRoles')->with([UserRoleEnum::ROLE_READER]);
         $user->expects($this->once())->method('setConfirmationCode')->with($this->isType('string'));
 
         $userCreatorService = new UserCreator($passwordHasher, $entityManager);
