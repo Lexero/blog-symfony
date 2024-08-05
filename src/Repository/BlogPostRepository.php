@@ -58,7 +58,7 @@ class BlogPostRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->where('p.title LIKE :query')
-            ->setParameter('query', '%'. $query. '%')
+            ->setParameter('query', '%' . $query . '%')
             ->getQuery()
             ->getResult();
     }

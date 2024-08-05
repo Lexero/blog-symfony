@@ -15,10 +15,7 @@ use App\Service\UserCreator;
 
 class UserCreatorServiceTest extends WebTestCase
 {
-
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     public function testValidateUserFields(): void
     {
         $passwordHasher = $this->createMock(UserPasswordHasherInterface::class);

@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Command;
 
 use App\Command\CreateUserCommand;
+use App\Command\UserManager;
 use App\Entity\User;
 use App\Tests\System\WebTestCase;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\MockObject\Exception;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -22,12 +26,14 @@ class CreateUserCommandTest extends WebTestCase
     private UserPasswordHasherInterface $passwordHasherMock;
     private CommandTester $commandTester;
 
+    /** @throws Exception */
     protected function setUp(): void
     {
         $this->entityManagerMock = $this->createMock(EntityManagerInterface::class);
         $this->passwordHasherMock = $this->createMock(UserPasswordHasherInterface::class);
+        $this->userManagerMock = $this->createMock(UserManager::class);
 
-        $command = new CreateUserCommand($this->entityManagerMock, $this->passwordHasherMock);
+        $command = new CreateUserCommand($this->entityManagerMock, $this->passwordHasherMock, $this->userManagerMock);
 
         $helperSet = new HelperSet([new QuestionHelper()]);
         $command->setHelperSet($helperSet);

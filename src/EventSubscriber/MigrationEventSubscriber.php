@@ -9,9 +9,7 @@ use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\ORM\Tools\Event\GenerateSchemaEventArgs;
 use Doctrine\ORM\Tools\ToolEvents;
 
-/**
- * @see https://github.com/doctrine/dbal/issues/1110#issuecomment-255765189
- */
+/** @see https://github.com/doctrine/dbal/issues/1110#issuecomment-255765189 */
 #[AsDoctrineListener(event: ToolEvents::postGenerateSchema)]
 class MigrationEventSubscriber
 {

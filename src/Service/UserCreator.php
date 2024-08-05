@@ -9,18 +9,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class UserCreator
+readonly class UserCreator
 {
-    private UserPasswordHasherInterface $userPasswordHasher;
-
-    private EntityManagerInterface $entityManager;
-
     public function __construct(
-        UserPasswordHasherInterface $userPasswordHasher,
-        EntityManagerInterface      $entityManager)
+        private UserPasswordHasherInterface $userPasswordHasher,
+        private EntityManagerInterface      $entityManager
+    )
     {
-        $this->userPasswordHasher = $userPasswordHasher;
-        $this->entityManager = $entityManager;
     }
 
     public function registrationUser($user, $form): void

@@ -8,6 +8,7 @@ use App\Enum\RegistrationEmailEnum;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -15,27 +16,15 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-class UserVerifier
+readonly class UserVerifier
 {
-    private EntityManagerInterface $entityManager;
-
-    private TokenStorageInterface $tokenStorage;
-
-    private MailerInterface $mailer;
-
-    private RouterInterface $router;
-
     public function __construct(
-        EntityManagerInterface $entityManager,
-        TokenStorageInterface  $tokenStorage,
-        MailerInterface        $mailer,
-        RouterInterface        $router
+        private EntityManagerInterface $entityManager,
+        private TokenStorageInterface  $tokenStorage,
+        private MailerInterface        $mailer,
+        private RouterInterface        $router
     )
     {
-        $this->entityManager = $entityManager;
-        $this->tokenStorage = $tokenStorage;
-        $this->mailer = $mailer;
-        $this->router = $router;
     }
 
     public function verifyUser($user): void
@@ -48,6 +37,7 @@ class UserVerifier
         $this->tokenStorage->setToken($token);
     }
 
+    /** @throws TransportExceptionInterface */
     public function sendVerificationEmailToUser($user): void
     {
         $email = new TemplatedEmail();

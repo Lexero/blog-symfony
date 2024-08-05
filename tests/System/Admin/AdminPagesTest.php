@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminPagesTest extends WebTestCase
 {
     private const ADMIN_EMAIL = "admin@your.com";
-
     private const BLACKLIST_URL_NAMES = [
         'sonata_admin_redirect',
         'sonata_admin_retrieve_form_element',

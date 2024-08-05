@@ -17,7 +17,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class UserAdmin extends AbstractAdmin
 {
-
     protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection
@@ -45,7 +44,7 @@ class UserAdmin extends AbstractAdmin
                 ],
             ])
             ->add('roles', ChoiceType::class, [
-                'choices'  => UserRoleEnum::getValues(),
+                'choices' => UserRoleEnum::getValues(),
                 'multiple' => true,
             ]);
     }

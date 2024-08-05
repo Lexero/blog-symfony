@@ -11,9 +11,7 @@ use Redis;
 
 class LockerTest extends WebTestCase
 {
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     public function testGetLockedBy()
     {
         $redis = $this->createMock(Redis::class);
@@ -27,9 +25,7 @@ class LockerTest extends WebTestCase
         $this->assertSame($userId, $locker->getLockedBy($key));
     }
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     public function testSetLock()
     {
         $redis = $this->createMock(Redis::class);
@@ -43,9 +39,7 @@ class LockerTest extends WebTestCase
         $locker->setLock($key, $userId);
     }
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     public function testRefreshLock()
     {
         $redis = $this->createMock(Redis::class);
@@ -60,9 +54,7 @@ class LockerTest extends WebTestCase
         $locker->refreshLock($key, $userId);
     }
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     public function testRefreshLockWhenUserNotMatch()
     {
         $redis = $this->createMock(Redis::class);

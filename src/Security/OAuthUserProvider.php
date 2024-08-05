@@ -12,13 +12,10 @@ use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class OAuthUserProvider implements UserProviderInterface, OAuthAwareUserProviderInterface
+readonly class OAuthUserProvider implements UserProviderInterface, OAuthAwareUserProviderInterface
 {
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     public function loadUserByOAuthUserResponse($response)
