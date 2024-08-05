@@ -13,11 +13,8 @@ use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
 class AdminCRUDController extends CRUDController implements ServiceSubscriberInterface
 {
-    private Locker $locker;
-
-    public function __construct(Locker $locker)
+    public function __construct(private readonly Locker $locker)
     {
-        $this->locker = $locker;
     }
 
     public function editAction(Request $request): Response

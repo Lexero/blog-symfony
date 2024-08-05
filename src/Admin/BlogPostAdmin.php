@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Admin;
 
 use App\Entity\BlogPost;
+use App\Entity\User;
 use Cocur\Slugify\SlugifyInterface;
+use LogicException;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -18,13 +20,12 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class BlogPostAdmin extends AbstractAdmin
 {
-    private TokenStorageInterface $tokenStorage;
-
-    private SlugifyInterface $slug;
-
-    public function setSlugify(SlugifyInterface $slugify): void
+    public function __construct(
+        private readonly TokenStorageInterface $tokenStorage,
+        private readonly SlugifyInterface      $slug
+    )
     {
-        $this->slug = $slugify;
+        parent::__construct();
     }
 
     public function postPersist($object): void
@@ -114,11 +115,18 @@ class BlogPostAdmin extends AbstractAdmin
 
     protected function createNewInstance(): object
     {
-        return new BlogPost($this->tokenStorage->getToken()->getUser());
-    }
+        $token = $this->tokenStorage->getToken();
 
-    public function setTokenStorage(TokenStorageInterface $tokenStorage): void
-    {
-        $this->tokenStorage = $tokenStorage;
+        if ($token === null) {
+            throw new LogicException('The security token is not available. The user might not be authenticated.');
+        }
+
+        $user = $token->getUser();
+
+        if (!$user instanceof User) {
+            throw new LogicException('The current user is not available or is not of the expected type.');
+        }
+
+        return new BlogPost($user);
     }
 }

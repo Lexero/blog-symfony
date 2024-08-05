@@ -31,14 +31,14 @@ class BlogPost
     private ?string $slug = null;
 
     #[ORM\Column(name: "created_at")]
-    protected DateTime $createdAt;
+    private DateTime $createdAt;
 
     #[ORM\Column(name: "updated_at")]
-    protected DateTime $updatedAt;
+    private DateTime $updatedAt;
 
     #[ManyToOne(targetEntity: User::class)]
     #[JoinColumn(name: 'author_id', referencedColumnName: 'id')]
-    private User|null $author;
+    private ?User $author;
 
     public function __construct(User $author)
     {

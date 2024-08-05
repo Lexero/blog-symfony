@@ -14,14 +14,11 @@ use Faker\Generator;
 
 class PostFixtures extends Fixture implements DependentFixtureInterface
 {
-    private Generator $faker;
-
-    private SlugifyInterface $slug;
-
-    public function __construct(SlugifyInterface $slugify)
+    public function __construct(
+        private Generator                 $faker,
+        private readonly SlugifyInterface $slug)
     {
         $this->faker = Factory::create();
-        $this->slug = $slugify;
     }
 
     public function load(ObjectManager $manager): void

@@ -39,9 +39,7 @@ class WebTestCase extends SymfonyTestCase
         return $client;
     }
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     protected function createAuthenticatedAdminClient(string $email): KernelBrowser
     {
         $user = $this->getRepository()->findOneBy(['email' => $email]);
@@ -53,9 +51,7 @@ class WebTestCase extends SymfonyTestCase
         return $this->createClient()->loginUser($user, self::ADMIN_FIREWALL);
     }
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     private function getRepository(): ServiceEntityRepository
     {
         self::bootKernel();

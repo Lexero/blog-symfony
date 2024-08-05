@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Command;
 
 use App\Command\DeleteUserCommand;
@@ -7,6 +9,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Tests\System\WebTestCase;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\MockObject\Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -21,6 +24,7 @@ class DeleteUserCommandTest extends WebTestCase
     private UserRepository $userRepository;
     private LoggerInterface $logger;
 
+    /** @throws Exception */
     protected function setUp(): void
     {
         $this->entityManager = $this->createMock(EntityManagerInterface::class);
@@ -28,6 +32,7 @@ class DeleteUserCommandTest extends WebTestCase
         $this->logger = $this->createMock(LoggerInterface::class);
     }
 
+    /** @throws Exception */
     public function testExecute()
     {
         $user = $this->createMock(User::class);

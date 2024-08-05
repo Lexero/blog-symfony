@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Command;
 
 use App\Entity\User;
@@ -21,9 +23,10 @@ final class DeleteUserCommand extends Command
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly UserRepository $userRepository,
-        private readonly LoggerInterface $logger
-    ) {
+        private readonly UserRepository         $userRepository,
+        private readonly LoggerInterface        $logger
+    )
+    {
         parent::__construct();
     }
 
@@ -46,7 +49,7 @@ final class DeleteUserCommand extends Command
         $email = $questionHelper->ask($input, $output, new Question('<info>Email: </info>'));
 
         /** @var User|null $user */
-        $user = $this->userRepository->findOneBy(['email'=>$email]);
+        $user = $this->userRepository->findOneBy(['email' => $email]);
 
         if (null === $user) {
             throw new RuntimeException(sprintf('User with email "%s" not found.', $email));

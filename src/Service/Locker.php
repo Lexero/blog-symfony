@@ -6,13 +6,10 @@ namespace App\Service;
 
 use Redis;
 
-class Locker
+readonly class Locker
 {
-    private Redis $redis;
-
-    public function __construct(\Redis $redis)
+    public function __construct(private \Redis $redis)
     {
-        $this->redis = $redis;
     }
 
     public function getLockedBy(string $key): ?int

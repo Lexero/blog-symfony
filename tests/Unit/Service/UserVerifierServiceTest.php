@@ -14,12 +14,11 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 class UserVerifierServiceTest extends WebTestCase
 {
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     public function testVerifyUser()
     {
         $entityManager = $this->createMock(EntityManagerInterface::class);
@@ -40,9 +39,7 @@ class UserVerifierServiceTest extends WebTestCase
         $userVerifierService->verifyUser($user);
     }
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception|TransportExceptionInterface */
     public function testSendVerificationEmailToUser()
     {
         $entityManager = $this->createMock(EntityManagerInterface::class);

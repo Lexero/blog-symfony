@@ -11,7 +11,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class VerificationUserChecker implements UserCheckerInterface
 {
-
     public function checkPreAuth(UserInterface $user): void
     {
         if ($user instanceof User && !$user->isVerified()) {

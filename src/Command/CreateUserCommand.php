@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Entity\User;
+use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
+use MyBuilder\Bundle\CronosBundle\Annotation\Cron;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,11 +18,14 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 #[AsCommand(name: 'app:create-user',
     description: 'Creates new user and stores in the database'
 )]
+/** @Cron(minute="/1", noLogs=true) */
 class CreateUserCommand extends Command
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
-        private readonly UserPasswordHasherInterface $passwordHasher)
+        private readonly EntityManagerInterface      $entityManager,
+        private readonly UserPasswordHasherInterface $passwordHasher,
+        private readonly UserManager                 $userManager
+    )
     {
         parent::__construct();
     }
@@ -34,9 +39,11 @@ class CreateUserCommand extends Command
               <info>Email: </info>
               <info>Password: </info>
               <info>Name: </info>
-            HELP);
+            HELP
+        );
     }
 
+    /** @throws Exception */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $questionHelper = $this->getHelper('question');
@@ -58,6 +65,11 @@ class CreateUserCommand extends Command
             sprintf('<comment>User created successfully! Email - %s, Name - %s</comment>',
                 $email, $name
             )
+        );
+
+        $this->userManager->recordEvent(
+            'User',
+            'Событие произошло'
         );
 
         return Command::SUCCESS;

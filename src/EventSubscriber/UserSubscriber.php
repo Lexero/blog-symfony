@@ -8,14 +8,10 @@ use App\Event\RegisteredUserEvent;
 use App\Service\UserVerifier;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class UserSubscriber implements EventSubscriberInterface
+readonly class UserSubscriber implements EventSubscriberInterface
 {
-
-    private UserVerifier $userVerifier;
-
-    public function __construct(UserVerifier $userVerifier)
+    public function __construct(private UserVerifier $userVerifier)
     {
-        $this->userVerifier = $userVerifier;
     }
 
     public static function getSubscribedEvents(): array
