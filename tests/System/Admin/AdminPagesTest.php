@@ -28,7 +28,6 @@ class AdminPagesTest extends WebTestCase
      */
     public function testAllPagesResponseCode()
     {
-        sleep(300);
         $client = $this->createAuthenticatedAdminClient(self::ADMIN_EMAIL);
 
         $router = static::$kernel->getContainer()->get('router');
