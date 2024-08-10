@@ -51,6 +51,13 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-progress
 
+      - name: Wait for Database
+        run: |
+          until pg_isready -h localhost -p 5432; do
+            echo "Waiting for database..."
+            sleep 5
+          done
+
       - name: Run Doctrine Migrations
         run: php bin/console doctrine:migrations:migrate --no-interaction
 
