@@ -18,6 +18,7 @@ class UserCreatorServiceTest extends WebTestCase
     /** @throws Exception */
     public function testValidateUserFields(): void
     {
+        sleep(200);
         $passwordHasher = $this->createMock(UserPasswordHasherInterface::class);
         $entityManager = $this->createMock(EntityManagerInterface::class);
         $form = $this->createMock(FormInterface::class);
