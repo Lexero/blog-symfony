@@ -35,10 +35,6 @@
 /web/bundles/
 /web/uploads/
 
-# PHPUnit
-/app/phpunit.xml
-/phpunit.xml
-
 # Build data
 /build/
 
@@ -69,4 +65,6 @@
 
 ###> phpunit/phpunit ###
 .phpunit.result.cache
+/tests/.phpunit.cache/
+/tests/.phpunit.cache/test-results
 ###< phpunit/phpunit ###
