@@ -36,8 +36,8 @@ services:
 
     sonata.blog.posts:
         class: App\Admin\BlogPostAdmin
+        arguments:
+            - '@security.token_storage'
+            - '@Cocur\Slugify\SlugifyInterface'
         tags:
             - { name: sonata.admin, model_class: App\Entity\BlogPost, controller: App\Controller\Admin\AdminCRUDController, manager_type: orm, label: 'Blog posts', show_mosaic_button: false }
-        calls:
-            - setTokenStorage: [ '@security.token_storage' ]
-            - setSlugify: [ '@Cocur\Slugify\Slugify' ]
