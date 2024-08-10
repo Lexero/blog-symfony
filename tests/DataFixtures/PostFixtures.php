@@ -9,16 +9,15 @@ use Cocur\Slugify\SlugifyInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
 use Faker\Generator;
 
 class PostFixtures extends Fixture implements DependentFixtureInterface
 {
     public function __construct(
-        private Generator                 $faker,
-        private readonly SlugifyInterface $slug)
+        private readonly Generator        $faker,
+        private readonly SlugifyInterface $slug
+    )
     {
-        $this->faker = Factory::create();
     }
 
     public function load(ObjectManager $manager): void

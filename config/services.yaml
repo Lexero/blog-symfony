@@ -16,8 +16,8 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    Cocur\Slugify\Slugify:
-        autowire: true
+    Cocur\Slugify\SlugifyInterface:
+        alias: 'cocur_slugify'
 
     App\Tests\DataFixtures\PostFixtures:
         tags: ['doctrine.fixture.orm']
@@ -36,3 +36,7 @@ services:
     App\EventSubscriber\MigrationEventSubscriber:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    Faker\Generator:
+        factory: [ 'Faker\Factory', 'create' ]
+        arguments: [ 'en_US' ]
