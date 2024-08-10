@@ -17,7 +17,7 @@ Pet project blog on symphony, ^6 version
 * `bin/console doctrine:database:create`
 * `bin/console doctrine:migrations:migrate`
 * `bin/console doctrine:fixtures:load`
-* `APP_ENV=test ./vendor/bin/phpunit -c ./tests/phpunit.xml.dist`
+* `APP_ENV=test ./vendor/bin/phpunit -c ./tests/phpunit.xml`
 
 ## Xdebug settings
 * In the PhpStorm settings go to `PHP → Servers`, add a server with name: `Server`, debugger: `Xdebug` host: `localhost`, port: `9003` , check the `Use path mapping` checkbox and map the local project directory to the path on the server `/var/www/html`
