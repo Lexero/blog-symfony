@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\System;
 
+use App\Kernel;
 use App\Repository\UserRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Exception;
@@ -20,6 +21,11 @@ class WebTestCase extends SymfonyTestCase
     protected function setUp(): void
     {
         static::bootKernel();
+    }
+
+    protected static function getKernelClass(): string
+    {
+        return Kernel::class;
     }
 
     //Copy-paste from previous version. Current one don't allow load kernel many times

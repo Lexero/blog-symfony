@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\System\App;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Tests\System\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 class RegistrationControllerTest extends WebTestCase
