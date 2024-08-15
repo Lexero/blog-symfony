@@ -1,0 +1,9 @@
+PATH=/usr/local/bin:/usr/bin:/bin
+MAILTO=your@email.com
+SHELL=/bin/bash
+
+#Create a test user.
+*/2 * * * * /usr/local/bin/php /var/www/html/bin/console app:create-user --env=dev > /dev/null 2> /dev/null
+
+#Delete last user in database.
+*/2 * * * * /usr/local/bin/php /var/www/html/bin/console app:delete-last-user --env=dev > /dev/null 2> /dev/null
