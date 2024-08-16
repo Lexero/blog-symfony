@@ -71,4 +71,6 @@ jobs:
         run: php bin/console doctrine:fixtures:load --env=test --no-interaction
 
       - name: Run PHPUnit
-        run: vendor/bin/phpunit --configuration tests/phpunit.xml
+        env:
+          SYMFONY_DEPRECATIONS_HELPER: weak_vendors
+        run: vendor/bin/phpunit --configuration tests/phpunit.xml --dont-report-useless-tests
