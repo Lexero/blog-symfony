@@ -28,7 +28,6 @@ class AdminPagesTest extends WebTestCase
      */
     public function testAllPagesResponseCode()
     {
-        sleep(200);
         $client = $this->createAuthenticatedAdminClient(self::ADMIN_EMAIL);
 
         $router = static::$kernel->getContainer()->get('router');
@@ -48,7 +47,7 @@ class AdminPagesTest extends WebTestCase
 
             $client->request(Request::METHOD_GET, $url);
 
-            $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode(), $routeName . ' | ' . $url);
+            $this::assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode(), $routeName . ' | ' . $url);
         }
     }
 }

@@ -76,12 +76,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setRoles(array $roles): void
     {
+        $uniqueRoles = [];
+
         foreach ($roles as $role) {
-            if (!UserRoleEnum::isValid(UserRoleEnum::from($role))) {
-                throw new \RuntimeException('Invalid role: ' . $role);
+            $roleValue = $role instanceof UserRoleEnum ? $role->value : $role;
+
+            if (!UserRoleEnum::isValid(UserRoleEnum::from($roleValue))) {
+                throw new \RuntimeException('Invalid role: ' . $roleValue);
+            }
+
+            if (!in_array($roleValue, $uniqueRoles, true)) {
+                $uniqueRoles[] = $roleValue;
             }
         }
-        $this->roles = $roles;
+
+        $this->roles = $uniqueRoles;
     }
 
     public function getPassword(): ?string

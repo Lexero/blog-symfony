@@ -22,7 +22,7 @@ class LockerTest extends WebTestCase
 
         $redis->method('get')->with($key)->willReturn((string)$userId);
 
-        $this->assertSame($userId, $locker->getLockedBy($key));
+        $this::assertSame($userId, $locker->getLockedBy($key));
     }
 
     /** @throws Exception */

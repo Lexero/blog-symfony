@@ -51,18 +51,56 @@ class CreateUserCommandTest extends WebTestCase
         $this->entityManagerMock
             ->expects($this->once())
             ->method('persist')
-            ->with($this->isInstanceOf(User::class));
+            ->with($this->callback(function (User $user) {
+                return $user->getEmail() === self::EMAIL
+                    && $user->getName() === self::USERNAME
+                    && $user->getPassword() === self::HASHED_PASSWORD;
+            }));
 
         $this->entityManagerMock
             ->expects($this->once())
             ->method('flush');
 
-        $this->commandTester->setInputs([self::EMAIL, self::PASSWORD, self::USERNAME]);
-        $this->commandTester->execute([]);
+        $this->commandTester->execute([
+            'email' => self::EMAIL,
+            'password' => self::PASSWORD,
+            'name' => self::USERNAME,
+        ]);
 
         $output = $this->commandTester->getDisplay();
-        $this->assertStringContainsString('User created successfully!', $output);
-        $this->assertStringContainsString(self::EMAIL, $output);
-        $this->assertStringContainsString(self::USERNAME, $output);
+        $this::assertStringContainsString('User created successfully!', $output);
+        $this::assertStringContainsString(self::EMAIL, $output);
+        $this::assertStringContainsString(self::USERNAME, $output);
+    }
+
+    public function testExecuteWithDefaultValues(): void
+    {
+        $this->passwordHasherMock
+            ->expects($this->once())
+            ->method('hashPassword')
+            ->willReturn(self::HASHED_PASSWORD);
+
+        $this->entityManagerMock
+            ->expects($this->once())
+            ->method('persist')
+            ->with($this->callback(function (User $user) {
+                return str_starts_with($user->getEmail(), 'user')
+                    && str_contains($user->getEmail(), '@example.com')
+                    && str_starts_with($user->getName(), 'User')
+                    && $user->getPassword() === self::HASHED_PASSWORD;
+            }));
+
+        $this->entityManagerMock
+            ->expects($this->once())
+            ->method('flush');
+
+        $this->commandTester->execute([
+            'password' => self::PASSWORD,
+        ]);
+
+        $output = $this->commandTester->getDisplay();
+        $this::assertStringContainsString('User created successfully!', $output);
+        $this::assertMatchesRegularExpression('/user\d{4}@example\.com/', $output);
+        $this::assertMatchesRegularExpression('/User\d{4}/', $output);
     }
 }
