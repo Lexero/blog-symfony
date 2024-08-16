@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use App\Repository\BlogPostRepository;
 use DateTime;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -31,10 +32,10 @@ class BlogPost
     private ?string $slug = null;
 
     #[ORM\Column(name: "created_at")]
-    private DateTime $createdAt;
+    private DateTimeImmutable $createdAt;
 
     #[ORM\Column(name: "updated_at")]
-    private DateTime $updatedAt;
+    private DateTimeImmutable $updatedAt;
 
     #[ManyToOne(targetEntity: User::class)]
     #[JoinColumn(name: 'author_id', referencedColumnName: 'id')]
@@ -42,7 +43,8 @@ class BlogPost
 
     public function __construct(User $author)
     {
-        $this->createdAt = new DateTime('now');
+        $this->createdAt = new DateTimeImmutable();
+        $this->updatedAt = $this->createdAt;
         $this->author = $author;
     }
 
@@ -81,21 +83,20 @@ class BlogPost
         $this->slug = $slug;
     }
 
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function getUpdatedAt(): DateTime
+    public function getUpdatedAt(): DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
     #[ORM\PreUpdate]
-    #[ORM\PrePersist]
     public function refreshUpdatedAt(): void
     {
-        $this->updatedAt = new DateTime('now');
+        $this->updatedAt = new DateTimeImmutable('now');
     }
 
     public function getAuthor(): User
