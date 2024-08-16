@@ -72,5 +72,5 @@ jobs:
 
       - name: Run PHPUnit
         env:
-          SYMFONY_DEPRECATIONS_HELPER: weak_vendors
+          SYMFONY_DEPRECATIONS_HELPER: max[total]=100
         run: vendor/bin/phpunit --configuration tests/phpunit.xml --dont-report-useless-tests
