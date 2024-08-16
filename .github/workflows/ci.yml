@@ -23,7 +23,7 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd pg_isready
+          --health-cmd "pg_isready -U blog"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -51,18 +51,24 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-progress
 
-      - name: Wait for Database
+      - name: Wait for PostgreSQL to be ready
         run: |
-          until pg_isready -h localhost -p 5432; do
-            echo "Waiting for database..."
+          until pg_isready -h localhost -p 5432 -U blog; do
+            echo "Waiting for PostgreSQL..."
             sleep 5
           done
 
+      - name: Create Test Database
+        env:
+          PGPASSWORD: blog
+        run: |
+          psql -h localhost -U blog -c "CREATE DATABASE blog_test;"
+
       - name: Run Doctrine Migrations
-        run: php bin/console doctrine:migrations:migrate --no-interaction
+        run: php bin/console doctrine:migrations:migrate --env=test --no-interaction
 
       - name: Load Fixtures
-        run: php bin/console doctrine:fixtures:load --no-interaction
+        run: php bin/console doctrine:fixtures:load --env=test --no-interaction
 
       - name: Run PHPUnit
         run: vendor/bin/phpunit --configuration tests/phpunit.xml

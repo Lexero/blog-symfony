@@ -1,3 +1,6 @@
+imports:
+    - { resource: packages/cronos.yml }
+
 parameters:
     app_url: '%env(APP_ENV)%'
 

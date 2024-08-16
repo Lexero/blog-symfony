@@ -23,3 +23,8 @@ Pet project blog on symphony, ^6 version
 * In the PhpStorm settings go to `PHP → Servers`, add a server with name: `Server`, debugger: `Xdebug` host: `localhost`, port: `9003` , check the `Use path mapping` checkbox and map the local project directory to the path on the server `/var/www/html`
 * Start Listening for PHP Debug Connection
 * Set a breakpoint in the code and use Xdebug!
+
+## Cron
+* For creating crontab use `php bin/console cronos:dump`
+* For running cron use `php bin/console cronos:replace` in the container
+* To stop cron use `service cron stop`

@@ -1,0 +1,8 @@
+my_builder_cronos:
+  exporter:
+    key: unique-key
+    mailto: your@email.com
+    path: /usr/local/bin:/usr/bin:/bin
+    executor: /usr/local/bin/php
+    console: /var/www/html/bin/console
+    shell: /bin/bash
