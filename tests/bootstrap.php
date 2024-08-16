@@ -10,10 +10,10 @@ if (file_exists(dirname(__DIR__).'/config/bootstrap.php')) {
     (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
 }
 
-//set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-//    if (E_DEPRECATED === $errno) {
-//        return true;
-//    }
-//
-//    return false;
-//});
+set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+    if (E_DEPRECATED === $errno) {
+        return true;
+    }
+
+    return false;
+});
