@@ -6,6 +6,8 @@ namespace App\Entity;
 
 use App\Enum\UserRoleEnum;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -24,10 +26,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 180, unique: false)]
+    #[ORM\Column(length: 180)]
     private ?string $name = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'json')]
     private array $roles = [UserRoleEnum::ROLE_READER->value];
 
     #[ORM\Column (nullable: true)]
@@ -36,8 +38,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column (nullable: true)]
     private ?string $password = null;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column]
     private bool $isVerified = false;
+
+    #[ORM\OneToMany(mappedBy: 'createdByUser', targetEntity: Comment::class)]
+    private Collection $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,7 +115,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function eraseCredentials(): void
     {
-        $this->password = null;
     }
 
     public function isVerified(): bool
@@ -126,5 +135,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setConfirmationCode(string $confirmationCode): void
     {
         $this->confirmationCode = $confirmationCode;
+    }
+
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function setComments(Collection $comments): void
+    {
+        $this->comments = $comments;
+    }
+
+    public function addComment(Comment $comment): void
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setCreatedByUser($this);
+        }
+    }
+
+    public function removeComment(Comment $comment): void
+    {
+        if ($this->comments->removeElement($comment)) {
+            if ($comment->getCreatedByUser() === $this) {
+                $comment->setCreatedByUser($this);
+            }
+        }
     }
 }

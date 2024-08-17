@@ -6,7 +6,7 @@ namespace App\Controller\App;
 
 use App\Entity\User;
 use App\Event\RegisteredUserEvent;
-use App\Form\RegistrationQueryType;
+use App\Form\RegistrationType;
 use App\Service\UserCreator;
 use App\Service\UserVerifier;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -26,7 +26,7 @@ class RegistrationController extends AbstractController
     ): Response
     {
         $user = new User();
-        $form = $this->createForm(RegistrationQueryType::class, $user);
+        $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

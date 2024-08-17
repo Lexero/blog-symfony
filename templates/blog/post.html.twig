@@ -15,4 +15,23 @@
         </div>
         <p>Posted by <span class="highlight">{{ post.author.name }}</span> at {{ post.createdAt|date('h:iA') }}</p>
     </article>
+    <hr>
+    <div class="container col-sm-12">
+        <div class="container">
+            {{ form_start(form) }}
+            {{ form_row(form.comment) }}
+            <button type="submit" class="btn btn-primary">Send comment</button>
+            {{ form_end(form) }}
+        </div>
+        <hr>
+        {% for comment in post.comments %}
+            <div class="comment">
+                <p>{{ comment.comment }}</p>
+                <small>Posted by {{ comment.user.username }} at {{ comment.createdAt|date('m/d/Y h:iA') }}</small>
+                <hr>
+            </div>
+        {% else %}
+            <p>No comments yet.</p>
+        {% endfor %}
+    </div>
 {% endblock %}
