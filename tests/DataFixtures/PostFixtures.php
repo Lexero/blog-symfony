@@ -27,7 +27,7 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
 
     public function loadPost(ObjectManager $manager): void
     {
-        $user = $this->getReference("admin");
+        $user = $this->getReference('admin');
 
         for ($i = 1; $i < 20; $i++) {
             $post = new BlogPost($user);

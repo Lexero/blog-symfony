@@ -12,24 +12,26 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Ramsey\Uuid\Uuid;
 
 #[ORM\Entity(repositoryClass: BlogPostRepository::class)]
 #[ORM\Table(name: 'posts')]
+#[ORM\Index(columns: ['author_id'])]
+#[ORM\Index(columns: ['created_at'])]
 #[ORM\HasLifecycleCallbacks]
 class BlogPost
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: 'string', length: 36)]
+    private string $id;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $title = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $body = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $slug = null;
 
     #[ORM\Column(type: 'datetimetz_immutable')]
@@ -39,21 +41,22 @@ class BlogPost
     private DateTimeImmutable $updatedAt;
 
     #[ManyToOne(targetEntity: User::class)]
-    #[JoinColumn(name: 'author_id', referencedColumnName: 'id')]
-    private ?User $author;
+    #[JoinColumn(name: 'author_id', referencedColumnName: 'id', onDelete: "SET NULL")]
+    private User $author;
 
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class)]
     private Collection $comments;
 
-    public function __construct(User $author)
+    public function __construct(User $user)
     {
+        $this->id = Uuid::uuid4()->toString();
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = $this->createdAt;
-        $this->author = $author;
+        $this->author = $user;
         $this->comments = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): string
     {
         return $this->id;
     }

@@ -6,16 +6,18 @@ namespace App\Entity;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'comments')]
+#[ORM\Index(columns: ['created_by_user_id'])]
+#[ORM\Index(columns: ['post_id'])]
 #[ORM\HasLifecycleCallbacks]
 class Comment
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(options: ['unsigned' => true])]
-    private ?int $id = null;
+    #[ORM\Column(type: 'string', length: 36)]
+    private string $id;
 
     #[ORM\Column(type: 'text', nullable: false)]
     private string $content;
@@ -36,8 +38,14 @@ class Comment
 
     public function __construct()
     {
+        $this->id = Uuid::uuid4()->toString();
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = $this->createdAt;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
     }
 
     public function getContent(): string
