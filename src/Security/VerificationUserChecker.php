@@ -14,14 +14,14 @@ class VerificationUserChecker implements UserCheckerInterface
     public function checkPreAuth(UserInterface $user): void
     {
         if ($user instanceof User && !$user->isVerified()) {
-            throw new LockedException();
+            throw new LockedException('User account is not verified.');
         }
     }
 
     public function checkPostAuth(UserInterface $user): void
     {
         if ($user instanceof User && !$user->isVerified()) {
-            throw new LockedException();
+            throw new LockedException('User account is not verified.');
         }
     }
 }

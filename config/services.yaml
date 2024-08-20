@@ -18,6 +18,7 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+            - '../src/Enum/'
 
     Cocur\Slugify\SlugifyInterface:
         alias: 'cocur_slugify'

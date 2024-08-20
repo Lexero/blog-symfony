@@ -6,6 +6,7 @@
     <article class="post">
         <header>
             <div class="date">
+                Posted by <span class="highlight">{{ post.author.name }}</span> at {{ post.createdAt|date('h:iA') }}
                 <time datetime="{{ post.createdAt|date('c') }}">{{ post.createdAt|date('l, F j, Y') }}</time>
             </div>
             <h2>{{ post.title }}</h2>
@@ -13,6 +14,30 @@
         <div>
             <p>{{ post.body }}</p>
         </div>
-        <p>Posted by <span class="highlight">{{ post.author.name }}</span> at {{ post.createdAt|date('h:iA') }}</p>
     </article>
+    <hr>
+    <div class="container col-sm-12">
+        <div class="container">
+            {% if form is defined %}
+                {{ form_start(form) }}
+                {{ form_row(form.content) }}
+                <button type="submit" class="btn btn-primary">Send comment</button>
+                {{ form_end(form) }}
+            {% endif %}
+        </div>
+        <div class="date">
+            Comments
+        </div>
+        {% for comment in post.comments %}
+            <div class="comment">
+                <p>{{ comment.content }}</p>
+                <small>Commented by {{ comment.createdByUser.name }} at {{ comment.createdAt|date('m/d/Y h:iA') }}</small>
+                <br>
+                <small>Last edit at {{ comment.updatedAt|date('m/d/Y h:iA') }}</small>
+                <hr>
+            </div>
+        {% else %}
+            <p>No comments yet.</p>
+        {% endfor %}
+    </div>
 {% endblock %}

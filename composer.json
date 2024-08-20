@@ -22,7 +22,7 @@
         "mybuilder/cronos-bundle": "^4.0",
         "php-http/guzzle6-adapter": "^2.0",
         "php-http/httplug-bundle": "^1.30",
-        "ramsey/uuid-doctrine": "^1.8",
+        "ramsey/uuid-doctrine": "^2.1",
         "sonata-project/admin-bundle": "^4.21",
         "sonata-project/doctrine-orm-admin-bundle": "^4.8",
         "symfony/amqp-messenger": "^6",
