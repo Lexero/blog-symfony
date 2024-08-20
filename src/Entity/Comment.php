@@ -10,8 +10,6 @@ use Ramsey\Uuid\Uuid;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'comments')]
-#[ORM\Index(columns: ['created_by_user_id'])]
-#[ORM\Index(columns: ['post_id'])]
 #[ORM\HasLifecycleCallbacks]
 class Comment
 {
@@ -23,11 +21,11 @@ class Comment
     private string $content;
 
     #[ORM\ManyToOne(targetEntity: BlogPost::class, inversedBy: 'comments')]
-    #[ORM\JoinColumn(referencedColumnName: 'id')]
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: true, onDelete: 'CASCADE')]
     private ?BlogPost $post = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comments')]
-    #[ORM\JoinColumn(referencedColumnName: 'id')]
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: true)]
     private ?User $createdByUser = null;
 
     #[ORM\Column(type: 'datetimetz_immutable')]
@@ -58,22 +56,22 @@ class Comment
         $this->content = $content;
     }
 
-    public function getCreatedByUser(): User
+    public function getCreatedByUser(): ?User
     {
         return $this->createdByUser;
     }
 
-    public function setCreatedByUser(User $createdByUser): void
+    public function setCreatedByUser(?User $createdByUser): void
     {
         $this->createdByUser = $createdByUser;
     }
 
-    public function getBlogPost(): BlogPost
+    public function getBlogPost(): ?BlogPost
     {
         return $this->post;
     }
 
-    public function setBlogPost(BlogPost $post): void
+    public function setBlogPost(?BlogPost $post): void
     {
         $this->post = $post;
     }

@@ -16,7 +16,6 @@ use Ramsey\Uuid\Uuid;
 
 #[ORM\Entity(repositoryClass: BlogPostRepository::class)]
 #[ORM\Table(name: 'posts')]
-#[ORM\Index(columns: ['author_id'])]
 #[ORM\Index(columns: ['created_at'])]
 #[ORM\HasLifecycleCallbacks]
 class BlogPost
