@@ -46,6 +46,11 @@ class BlogPost
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class)]
     private Collection $comments;
 
+    #[ORM\ManyToMany(targetEntity: Tag::class, cascade: ['persist'])]
+    #[ORM\JoinTable(name: 'post_tags')]
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false)]
+    private Collection $categories;
+
     public function __construct(User $user)
     {
         $this->id = Uuid::uuid4()->toString();
@@ -53,6 +58,7 @@ class BlogPost
         $this->updatedAt = $this->createdAt;
         $this->author = $user;
         $this->comments = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): string
@@ -133,5 +139,10 @@ class BlogPost
     public function removeComment(Comment $comment): void
     {
         $this->comments->removeElement($comment);
+    }
+
+    public function getCategories(): Collection
+    {
+        return $this->categories;
     }
 }
