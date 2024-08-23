@@ -8,7 +8,7 @@ use Redis;
 
 readonly class Locker
 {
-    public function __construct(private \Redis $redis)
+    public function __construct(private Redis $redis)
     {
     }
 

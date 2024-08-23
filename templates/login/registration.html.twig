@@ -48,8 +48,10 @@
                                 <button id="submit_btn" type="submit" class="btn btn-primary">
                                     <i class="fa fa-btn fa-user"></i> Registration
                                 </button>
-                                <a href="{{ path('hwi_oauth_service_redirect', {'service': 'google'}) }}" class="btn btn-primary">Use Google account</a>
-                                <a href="{{ path('hwi_oauth_service_redirect', {'service': 'github'}) }}" class="btn btn-primary">Use GitHub account</a>
+                                <a href="{{ path('hwi_oauth_service_redirect', {'service': 'google'}) }}"
+                                   class="btn btn-primary">Use Google account</a>
+                                <a href="{{ path('hwi_oauth_service_redirect', {'service': 'github'}) }}"
+                                   class="btn btn-primary">Use GitHub account</a>
                             </div>
                         </div>
                         {{ form_end(registrationForm) }}

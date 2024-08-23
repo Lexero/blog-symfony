@@ -6,7 +6,6 @@ namespace App\Tests\System;
 
 use App\Kernel;
 use App\Repository\UserRepository;
-use App\Tests\Client;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Exception;
 use LogicException;
