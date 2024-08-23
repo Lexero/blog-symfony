@@ -31,7 +31,8 @@
         {% for comment in post.comments %}
             <div class="comment">
                 <p>{{ comment.content }}</p>
-                <small>Commented by {{ comment.createdByUser.name }} at {{ comment.createdAt|date('m/d/Y h:iA') }}</small>
+                <small>Commented by {{ comment.createdByUser.name }}
+                    at {{ comment.createdAt|date('m/d/Y h:iA') }}</small>
                 <br>
                 <small>Last edit at {{ comment.updatedAt|date('m/d/Y h:iA') }}</small>
                 <hr>

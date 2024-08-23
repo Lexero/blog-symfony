@@ -7,6 +7,7 @@ namespace App\EventSubscriber;
 use App\Event\RegisteredUserEvent;
 use App\Service\UserVerifier;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 readonly class UserSubscriber implements EventSubscriberInterface
 {
@@ -21,6 +22,7 @@ readonly class UserSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /** @throws TransportExceptionInterface */
     public function onUserRegister(RegisteredUserEvent $registeredUserEvent): void
     {
         $this->userVerifier->sendVerificationEmailToUser($registeredUserEvent->getRegisteredUser());
